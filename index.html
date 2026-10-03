@@ -566,7 +566,7 @@ function sprChurch() {
     p.rect(22, top + 42, 36, 2, (X) => (X % 4 ? 'i' : 'v'));
     return p.outline('k');
 }
-function sprTower() {
+function sprTower(noClock) {
     const p = new Pix(20, 118), w = 16, x0 = 2;
     p.set(10, 0, 'y');
     p.vl(10, 1, 2, 'K');
@@ -599,11 +599,13 @@ function sprTower() {
     for (let i = 0; i < w; i += 2)
         p.set(x0 + i, 45, 'v');
     brick(p, x0, 49, w, 66, PINK, 0.95, 9);
-    p.ell(10, 57, 5, 5, 'i');
-    p.ell(10, 57, 4, 4, 'q');
-    p.vl(10, 54, 4, 'k');
-    p.hl(10, 57, 3, 'k');
-    p.set(10, 57, 'x');
+    if (!noClock) {
+        p.ell(10, 57, 5, 5, 'i');
+        p.ell(10, 57, 4, 4, 'q');
+        p.vl(10, 54, 4, 'k');
+        p.hl(10, 57, 3, 'k');
+        p.set(10, 57, 'x');
+    }
     for (const y of [70, 92]) {
         p.rect(x0, y, w, 2, 'w');
         p.hl(x0, y + 2, w, 'v');
@@ -1373,7 +1375,7 @@ function buildWorld(rnd) {
     add(ch, 74, 190 - ch.h, { ay: ch.h - 14, size: 34, tag: 'church', sh: [2, 40, 76, 50, 26] });
     const tw = im(sprTower());
     towerTop = [56 + (tw.w >> 1) - 4, 191 - tw.h + 10];
-    add(tw, 56, 191 - tw.h, { ay: tw.h - 6, size: 24, tag: 'tower', sh: [2, 50, 16, 66, 60] });
+    towerObj = add(tw, 56, 191 - tw.h, { ay: tw.h - 6, size: 24, tag: 'tower', sh: [2, 50, 16, 66, 60] });
     const fo = im(sprFountain());
     add(fo, 108, 252 - fo.h, { ay: fo.h - 9, size: 14, tag: 'fountain', sh: [4, 14, 28, 12, 6] });
     for (const [x, y, s] of [[60, 232, 1], [168, 232, 2], [60, 262, 3], [168, 262, 4]]) {
@@ -1762,7 +1764,7 @@ function rebake() {
 }
 const DUR = 60, R0 = 6.5, GROW = 0.1;
 const CLOCK_BONUS = 8, CLOCK_LIFE = 14;
-let clockObj = null, clockAt = 0, bonusT = 0, towerTop = [66, 140];
+let clockObj = null, clockAt = 0, bonusT = 0, towerTop = [66, 140], towerObj = null;
 let state = 'menu', mode = 'free', score = 0, eaten = 0, timeLeft = DUR, rShow = R0, falling = [], floats = [], eatenTags = [], combo = 0, lastEat = -9, level = 0;
 let cam = { x: 126, y: 250, span: 100 }, joy = null, keys = {}, hintT = 0, endT = 0, pulse = 0;
 let best = Shell.store.get('tragon:best', 0);
@@ -1876,6 +1878,10 @@ function dropClock() {
     o.data = { t: 0, x0: towerTop[0], y0: towerTop[1], x1: 98, y1: 204 };
     OBJ.push(OBJ.splice(OBJ.indexOf(o), 1)[0]);
     clockObj = o;
+    if (towerObj) {
+        towerObj.c = im(sprTower(true)).c;
+        dirty = true;
+    }
     floats.push({ x: hole.x, y: hole.y - hole.r - 14, text: Shell.t('clockDrop'), life: 2.4, big: true, hot: true });
     [0, 0.18, 0.36].forEach((d, i) => Shell.tone([784, 659, 523][i], 0.4, 'triangle', 0.08, 0, d));
     Shell.buzz(30);
