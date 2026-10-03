@@ -31,6 +31,7 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
 .sub { font-size: 14px; color: var(--hot); margin-top: 4px; }
 .time { font-weight: 700; font-size: clamp(26px, 7vw, 40px); line-height: 1; font-variant-numeric: tabular-nums; text-align: center; }
 .time.low { color: #ff6a5a; }
+.time.bonus { color: var(--hot); transform: scale(1.25); transition: transform .15s steps(3); }
 .tools { display: flex; gap: 8px; justify-self: end; }
 .icon { width: 40px; height: 40px; border-radius: 0; border: 2px solid var(--ink); background: rgba(42, 27, 46, .7); color: var(--ink); font: 700 13px var(--pix); display: grid; place-items: center; cursor: pointer; box-shadow: 3px 3px 0 #2a1b2e; text-shadow: none; }
 .icon svg { width: 18px; height: 18px; }
@@ -293,23 +294,23 @@ const Shell = (() => {
 })();</script>
 <script>"use strict";
 Shell.addStrings({
-    es: { intro: 'Bajo el dominio de tu patrocinio queremos estar…', introSkip: 'Toca para empezar', tagline: 'Engulle el pueblo en 60 segundos y deja todo bajo el dominio de su patrocinio.', best: 'Récord', streak: 'Racha', play: 'Jugar', daily: 'Reto diario #{n}', dailyDone: 'Hoy: {s}', retry: 'Otra vez', share: 'Compartir', menu: 'Menú',
+    es: { intro: 'Bajo el dominio de tu patrocinio queremos estar…', introSkip: 'Toca para empezar', clockDrop: '¡Se ha caído el reloj de la iglesia!', clockGot: '⏰ ¡+{s} segundos!', tagline: 'Engulle el pueblo en 60 segundos y deja todo bajo el dominio de su patrocinio.', best: 'Récord', streak: 'Racha', play: 'Jugar', daily: 'Reto diario #{n}', dailyDone: 'Hoy: {s}', retry: 'Otra vez', share: 'Compartir', menu: 'Menú',
         free: 'Libre', dailyMode: 'Diario #{n}', newBest: 'Nuevo récord.', toBest: 'Te faltaron {d} puntos para tu récord ({b}).', official: 'Intento oficial del día. Racha: {s}.', practice: 'Práctica: cuenta solo el primer intento del día.',
         hint: 'Arrastra para moverte', timeUp: '¡Tiempo!', pct: 'Te has tragado el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: '¡Más grande!', shout: '¡{n}!',
         lm_church: 'la iglesia', lm_tower: 'el campanario', lm_fountain: 'la fuente', lm_hall: 'el Ayuntamiento', lm_jutera: 'la Jutera', lm_cultura: 'la Casa de la Cultura', lm_metro: 'el metro', lm_bull: 'el toro',
         lm_falla: 'la falla', lm_band: 'la banda', lm_patrocinio: 'el colegio Virgen del Patrocinio', lm_jaume: 'el colegio Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomóvil', lm_quintos: 'los quintos', lm_purisimas: 'las purísimas', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'la horchatería', lm_fronton: 'el frontón', lm_goal: 'la portería', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor' },
-    ca: { intro: 'Sota el domini del teu patrocini volem estar…', introSkip: 'Toca per a començar', tagline: 'Engoleix el poble en 60 segons i deixa-ho tot sota el domini del seu patrocini.', best: 'Rècord', streak: 'Ratxa', play: 'Juga', daily: 'Repte diari #{n}', dailyDone: 'Avui: {s}', retry: 'Una altra', share: 'Comparteix', menu: 'Menú',
+    ca: { intro: 'Sota el domini del teu patrocini volem estar…', introSkip: 'Toca per a començar', clockDrop: 'S’ha caigut el rellotge de l’església!', clockGot: '⏰ +{s} segons!', tagline: 'Engoleix el poble en 60 segons i deixa-ho tot sota el domini del seu patrocini.', best: 'Rècord', streak: 'Ratxa', play: 'Juga', daily: 'Repte diari #{n}', dailyDone: 'Avui: {s}', retry: 'Una altra', share: 'Comparteix', menu: 'Menú',
         free: 'Lliure', dailyMode: 'Diari #{n}', newBest: 'Nou rècord.', toBest: 'Et van faltar {d} punts per al teu rècord ({b}).', official: 'Intent oficial del dia. Ratxa: {s}.', practice: 'Pràctica: només compta el primer intent del dia.',
         hint: 'Arrossega per moure’t', timeUp: 'Temps!', pct: 'T’has engolit el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: 'Més gran!', shout: '{n}!',
         lm_church: 'l’església', lm_tower: 'el campanar', lm_fountain: 'la font', lm_hall: 'l’Ajuntament', lm_jutera: 'la Jutera', lm_cultura: 'la Casa de la Cultura', lm_metro: 'el metro', lm_bull: 'el bou',
         lm_falla: 'la falla', lm_band: 'la banda', lm_patrocinio: 'el col·legi Verge del Patrocini', lm_jaume: 'el col·legi Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomòbil', lm_quintos: 'els quintos', lm_purisimas: 'les purísimes', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'l’orxateria', lm_fronton: 'el frontó', lm_goal: 'la porteria', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor' },
-    en: { intro: 'Under the rule of your patronage we want to be…', introSkip: 'Tap to start', tagline: 'Swallow the town in 60 seconds and leave everything under the rule of its patronage.', best: 'Best', streak: 'Streak', play: 'Play', daily: 'Daily #{n}', dailyDone: 'Today: {s}', retry: 'Again', share: 'Share', menu: 'Menu',
+    en: { intro: 'Under the rule of your patronage we want to be…', introSkip: 'Tap to start', clockDrop: 'The church clock has fallen!', clockGot: '⏰ +{s} seconds!', tagline: 'Swallow the town in 60 seconds and leave everything under the rule of its patronage.', best: 'Best', streak: 'Streak', play: 'Play', daily: 'Daily #{n}', dailyDone: 'Today: {s}', retry: 'Again', share: 'Share', menu: 'Menu',
         free: 'Free', dailyMode: 'Daily #{n}', newBest: 'New best.', toBest: '{d} points short of your best ({b}).', official: 'Official run for today. Streak: {s}.', practice: 'Practice: only the first run of the day counts.',
         hint: 'Drag to move', timeUp: 'Time’s up!', pct: 'You swallowed {p}% of Foios.', pctShort: '{p}% of Foios', bigger: 'Bigger!', shout: '{n}!',
         lm_church: 'the church', lm_tower: 'the bell tower', lm_fountain: 'the fountain', lm_hall: 'the town hall', lm_jutera: 'the Jutera', lm_cultura: 'the culture house', lm_metro: 'the metro', lm_bull: 'the bull',
         lm_falla: 'the falla', lm_band: 'the band', lm_patrocinio: 'the Virgen del Patrocinio school', lm_jaume: 'the Rey en Jaume school', lm_refran: 'Refrán Torres', lm_discomovil: 'the Discomóvil', lm_quintos: 'the quintos', lm_purisimas: 'the purísimas', lm_paella: 'the paella', lm_caldereta: 'the caldereta', lm_horchata: 'the horchata bar', lm_fronton: 'the pelota court', lm_goal: 'the goal', lm_barraca: 'the barraca', lm_bar: 'the bar', lm_tractor: 'the tractor' }
 });
-const EMOJI = { church: '⛪', tower: '🔔', fountain: '⛲', hall: '🏛️', jutera: '🏭', cultura: '🎭', metro: '🚇', bull: '🐂', falla: '🔥', band: '🎺', patrocinio: '🏫', jaume: '👑', quintos: '🧢', refran: '🏃', discomovil: '🪩', purisimas: '👗', paella: '🥘', caldereta: '🍲', horchata: '🥛', fronton: '🧱', goal: '⚽', barraca: '🏡', bar: '🍺', tractor: '🚜' };
+const EMOJI = { church: '⛪', tower: '🔔', fountain: '⛲', hall: '🏛️', jutera: '🏭', cultura: '🎭', metro: '🚇', bull: '🐂', falla: '🔥', band: '🎺', patrocinio: '🏫', jaume: '👑', quintos: '🧢', reloj: '⏰', refran: '🏃', discomovil: '🪩', purisimas: '👗', paella: '🥘', caldereta: '🍲', horchata: '🥛', fronton: '🧱', goal: '⚽', barraca: '🏡', bar: '🍺', tractor: '🚜' };
 const Art = (() => {
     const PAL = {
         k: '#2a1b2e', K: '#4b2e44', j: '#6b4a5e',
@@ -1088,6 +1089,12 @@ function sprPancarta(l, bg, fg) {
 }
 const sprQuinto = f => spr(['.kkk..', 'kxxxx.', 'kpppk.', 'kqqqkY', 'kqqqkY', '.kbk..', f ? '..k...' : '.k.k..']);
 const sprPurisima = f => spr(['..kkk..', '.khhhk.', '.kpppk.', '.kqBqk.', 'kqqBqqk', 'kqqqqqk', f ? '.kk.kk.' : '..k.k..']);
+function sprReloj(f) {
+    const p = spr(['..kkkkk..', '.kyyYyyk.', 'kyYwwwYyk', 'kywwkwwyk', 'kywwkkwyk', 'kywwwwwyk', 'kyYwwwYyk', '.kyyYyyk.', '..kkkkk..']);
+    if (f)
+        p.d = p.d.map(c => (c === 'y' ? 'w' : c === 'Y' ? 'N' : c));
+    return p;
+}
 function sprFronton() {
     const p = new Pix(46, 34);
     p.rect(1, 1, 44, 28, (X, Y, i, j) => shade(['e', 'I', 'E', 'F'], 0.85 - i / 60 + (vnoise(X * 0.3, Y * 0.3, 6) - 0.5) * 0.3, X, Y));
@@ -1365,6 +1372,7 @@ function buildWorld(rnd) {
     const ch = im(sprChurch());
     add(ch, 74, 190 - ch.h, { ay: ch.h - 14, size: 34, tag: 'church', sh: [2, 40, 76, 50, 26] });
     const tw = im(sprTower());
+    towerTop = [56 + (tw.w >> 1) - 4, 191 - tw.h + 10];
     add(tw, 56, 191 - tw.h, { ay: tw.h - 6, size: 24, tag: 'tower', sh: [2, 50, 16, 66, 60] });
     const fo = im(sprFountain());
     add(fo, 108, 252 - fo.h, { ay: fo.h - 9, size: 14, tag: 'fountain', sh: [4, 14, 28, 12, 6] });
@@ -1753,6 +1761,8 @@ function rebake() {
     dirty = false;
 }
 const DUR = 60, R0 = 6.5, GROW = 0.1;
+const CLOCK_BONUS = 8, CLOCK_LIFE = 14;
+let clockObj = null, clockAt = 0, bonusT = 0, towerTop = [66, 140];
 let state = 'menu', mode = 'free', score = 0, eaten = 0, timeLeft = DUR, rShow = R0, falling = [], floats = [], eatenTags = [], combo = 0, lastEat = -9, level = 0;
 let cam = { x: 126, y: 250, span: 100 }, joy = null, keys = {}, hintT = 0, endT = 0, pulse = 0;
 let best = Shell.store.get('tragon:best', 0);
@@ -1764,6 +1774,9 @@ function newGame(m) {
     buildWorld(rnd);
     hole = { x: 80, y: 246, r: R0, vx: 0, vy: 0 };
     rShow = R0;
+    clockObj = null;
+    clockAt = 15 + Math.random() * 12;
+    bonusT = 0;
     score = 0;
     eaten = 0;
     timeLeft = DUR;
@@ -1798,6 +1811,7 @@ function paintHud() {
     $('pct').textContent = playing ? Shell.t('pctShort', { p: pct() }) : '';
     const s = Math.ceil(timeLeft);
     $('time').textContent = playing ? '0:' + String(Math.max(0, s)).padStart(2, '0') : '';
+    $('time').classList.toggle('bonus', bonusT > 0);
     $('time').classList.toggle('low', playing && s <= 10);
 }
 function swallow(o, dx) {
@@ -1806,6 +1820,19 @@ function swallow(o, dx) {
     falling.push(o);
     if (o.sh && !o.mov)
         dirty = true;
+    if (o.tag === 'reloj') {
+        clockObj = null;
+        eatenTags.push('reloj');
+        score += 25;
+        timeLeft += CLOCK_BONUS;
+        bonusT = 1.6;
+        floats.push({ x: hole.x, y: hole.y - hole.r - 8, text: Shell.t('clockGot', { s: CLOCK_BONUS }), life: 2, big: true, hot: true });
+        [0, 0.09, 0.18, 0.27].forEach((d, i) => Shell.tone(Shell.note(523, i * 3), 0.2, 'triangle', 0.1, 0, d));
+        Shell.buzz([20, 30, 20]);
+        pulse = 1;
+        paintHud();
+        return;
+    }
     eaten += o.size * o.size;
     const lm = o.tag && !eatenTags.includes(o.tag);
     const pts = Math.max(1, Math.round(o.size * o.size / 4)) * (o.tag ? 2 : 1);
@@ -1840,8 +1867,49 @@ function swallow(o, dx) {
     }
     paintHud();
 }
+function dropClock() {
+    const a = cached('reloj0', () => sprReloj(0)), b = cached('reloj1', () => sprReloj(1));
+    const o = add(a, towerTop[0], towerTop[1], { size: 3, tag: 'reloj', sh: [3, 7, 3, 3, 4] });
+    o.c0 = a.c;
+    o.c1 = b.c;
+    o.mov = clockMove;
+    o.data = { t: 0, x0: towerTop[0], y0: towerTop[1], x1: 98, y1: 204 };
+    OBJ.push(OBJ.splice(OBJ.indexOf(o), 1)[0]);
+    clockObj = o;
+    floats.push({ x: hole.x, y: hole.y - hole.r - 14, text: Shell.t('clockDrop'), life: 2.4, big: true, hot: true });
+    [0, 0.18, 0.36].forEach((d, i) => Shell.tone([784, 659, 523][i], 0.4, 'triangle', 0.08, 0, d));
+    Shell.buzz(30);
+}
+function clockMove(o, dt) {
+    const d = o.data;
+    d.t += dt;
+    const FALL = 1.0, p = Math.min(1, d.t / FALL);
+    o.x = d.x0 + (d.x1 - d.x0) * p;
+    let y = d.y0 + (d.y1 - d.y0) * p * p;
+    if (d.t > FALL) {
+        const q = d.t - FALL;
+        y = d.y1 - Math.abs(Math.sin(q * 9)) * 7 * Math.exp(-q * 4.5);
+    }
+    o.y = y;
+    o.c = ((d.t * 5) | 0) & 1 ? o.c1 : o.c0;
+    if (d.t > FALL && !d.landed) {
+        d.landed = true;
+        Shell.tone(1320, 0.12, 'square', 0.05, 0.3);
+    }
+    if (d.t > FALL + CLOCK_LIFE) {
+        o.alive = false;
+        OBJ.splice(OBJ.indexOf(o), 1);
+        clockObj = null;
+        floats.push({ x: o.x + 4, y: o.y, text: '…', life: 0.8 });
+    }
+}
 function update(dt) {
     T += dt;
+    if (bonusT > 0) {
+        bonusT = Math.max(0, bonusT - dt);
+        if (bonusT === 0)
+            paintHud();
+    }
     for (const o of OBJ)
         if (o.mov && o.alive)
             o.mov(o, dt);
@@ -1874,6 +1942,10 @@ function update(dt) {
         hole.vy += (iy * sp - hole.vy) * Math.min(1, dt * 10);
         hole.x = clamp(hole.x + hole.vx * dt, 4, Z.beach[0] + 4);
         hole.y = clamp(hole.y + hole.vy * dt, 4, WH - 4);
+        if (!clockObj && clockAt > 0 && DUR - timeLeft >= clockAt) {
+            clockAt = -1;
+            dropClock();
+        }
         eatCheck();
         if (timeLeft <= 0) {
             timeLeft = 0;
@@ -1914,20 +1986,20 @@ function update(dt) {
     cam.y += (hole.y - cam.y) * k;
 }
 function eatCheck() {
-    const r = hole.r;
+    const r = hole.r, mag = 2 + r * 0.12;
     for (const o of OBJ) {
         if (!o.alive)
             continue;
         o.jig = 0;
         const dx = o.x + o.ax - hole.x;
-        if (Math.abs(dx) > r + o.size + 2)
+        if (Math.abs(dx) > r + o.size + 2 + mag)
             continue;
         const dy = (o.y + o.ay - hole.y) / K, d = Math.hypot(dx, dy);
-        if (d > r + o.size)
+        if (d > r + o.size + mag)
             continue;
-        if (o.size <= r * 0.92 && d < r - o.size * 0.5)
+        if (o.size <= r * 0.92 && d < r - o.size * 0.5 + mag)
             swallow(o, dx);
-        else if (d < r * 0.95 && o.size > r * 0.92)
+        else if (d < r * 0.95 + mag && o.size > r * 0.92)
             o.jig = 1;
     }
 }
@@ -2013,6 +2085,34 @@ function draw() {
     g.fillStyle = grad;
     g.fillRect(0, 0, cv.width, cv.height);
     g.globalCompositeOperation = 'source-over';
+    if (clockObj && state === 'play') {
+        const wx = clockObj.x + clockObj.w / 2, wy = clockObj.y + clockObj.h / 2, sx = ox + wx * s, sy = oy + wy * s, m = 34 * dpr;
+        if (sx < m || sx > cv.width - m || sy < m * 2 || sy > cv.height - m) {
+            const ax = clamp(sx, m, cv.width - m), ay = clamp(sy, m * 2, cv.height - m), an = Math.atan2(sy - ay, sx - ax), u = 7 * dpr, blink = ((T * 4) | 0) & 1;
+            g.save();
+            g.translate(ax, ay);
+            g.rotate(an);
+            g.fillStyle = blink ? '#ffd95a' : '#fff3dc';
+            g.strokeStyle = '#2a1b2e';
+            g.lineWidth = 2 * dpr;
+            g.beginPath();
+            g.moveTo(u * 2, 0);
+            g.lineTo(-u, -u * 1.4);
+            g.lineTo(-u, u * 1.4);
+            g.closePath();
+            g.fill();
+            g.stroke();
+            g.restore();
+            g.font = '700 ' + 16 * dpr + 'px "Pixelify Sans", monospace';
+            g.textAlign = 'center';
+            g.lineWidth = 4 * dpr;
+            g.strokeStyle = '#2a1b2e';
+            g.fillStyle = '#ffd95a';
+            const tx = clamp(ax - Math.cos(an) * 20 * dpr, 20 * dpr, cv.width - 20 * dpr), ty = clamp(ay - Math.sin(an) * 20 * dpr, 20 * dpr, cv.height - 10 * dpr);
+            g.strokeText('⏰', tx, ty);
+            g.fillText('⏰', tx, ty);
+        }
+    }
     g.textAlign = 'center';
     g.lineJoin = 'round';
     for (const f of floats) {
