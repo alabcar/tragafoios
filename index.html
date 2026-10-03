@@ -45,7 +45,8 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
 .overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 16px; padding-bottom: max(24px, env(safe-area-inset-bottom, 0px)); pointer-events: none; }
 .overlay > * { pointer-events: auto; }
 .card { background: var(--panel); border: 3px solid var(--ink); box-shadow: 6px 6px 0 #140c16; padding: 16px; display: grid; gap: 12px; max-width: 480px; width: 100%; margin: 0 auto; box-sizing: border-box; }
-h1 { margin: 0; font-weight: 700; font-size: clamp(54px, 17vw, 88px); line-height: .85; color: var(--accent); text-shadow: 4px 4px 0 #7d2e2a; }
+h1 { margin: 0 0 4px; line-height: 0; color: var(--accent); }
+h1 canvas { position: static; inset: auto; width: auto; height: auto; display: block; image-rendering: pixelated; }
 .tag { margin: 0; font-size: 17px; line-height: 1.3; }
 .big { font-weight: 700; font-size: clamp(60px, 19vw, 104px); line-height: .85; font-variant-numeric: tabular-nums; color: var(--hot); text-shadow: 4px 4px 0 #7d2e2a; }
 .row { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -83,7 +84,7 @@ textarea { width: 100%; min-height: 84px; font: 14px var(--pix); background: tra
 
   <div class="overlay" id="menu">
     <div class="card">
-      <h1>Traga Foios</h1>
+      <h1 aria-label="Traga Foios"><canvas id="titleC"></canvas></h1>
       <p class="tag" data-i18n="tagline"></p>
       <div class="stats"><span><span data-i18n="best"></span> <b id="mBest">0</b></span></div>
       <div class="row">
@@ -298,19 +299,19 @@ Shell.addStrings({
         free: 'Libre', dailyMode: 'Diario #{n}', newBest: 'Nuevo récord.', toBest: 'Te faltaron {d} puntos para tu récord ({b}).', official: 'Intento oficial del día. Racha: {s}.', practice: 'Práctica: cuenta solo el primer intento del día.',
         hint: 'Arrastra para moverte', timeUp: '¡Tiempo!', pct: 'Te has tragado el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: '¡Más grande!', shout: '¡{n}!',
         lm_church: 'la iglesia', lm_tower: 'el campanario', lm_fountain: 'la fuente', lm_hall: 'el Ayuntamiento', lm_jutera: 'la Jutera', lm_cultura: 'la Casa de la Cultura', lm_metro: 'el metro', lm_bull: 'el toro',
-        lm_falla: 'la falla', lm_band: 'la banda', lm_patrocinio: 'el colegio Virgen del Patrocinio', lm_jaume: 'el colegio Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomóvil', lm_quintos: 'los quintos', lm_purisimas: 'las purísimas', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'la horchatería', lm_fronton: 'el frontón', lm_goal: 'la portería', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor' },
+        lm_falla: 'la falla', lm_band: 'la banda', lm_patrocinio: 'el colegio Virgen del Patrocinio', lm_jaume: 'el colegio Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomóvil', lm_quintos: 'los quintos', lm_purisimas: 'las purísimas', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'la horchatería', lm_fronton: 'el frontón', lm_goal: 'la portería', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'los recres' },
     ca: { intro: 'Sota el domini del teu patrocini volem estar…', introSkip: 'Toca per a començar', clockDrop: 'S’ha caigut el rellotge de l’església!', clockGot: '⏰ +{s} segons!', tagline: 'Engoleix el poble en 60 segons i deixa-ho tot sota el domini del seu patrocini.', best: 'Rècord', streak: 'Ratxa', play: 'Juga', daily: 'Repte diari #{n}', dailyDone: 'Avui: {s}', retry: 'Una altra', share: 'Comparteix', menu: 'Menú',
         free: 'Lliure', dailyMode: 'Diari #{n}', newBest: 'Nou rècord.', toBest: 'Et van faltar {d} punts per al teu rècord ({b}).', official: 'Intent oficial del dia. Ratxa: {s}.', practice: 'Pràctica: només compta el primer intent del dia.',
         hint: 'Arrossega per moure’t', timeUp: 'Temps!', pct: 'T’has engolit el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: 'Més gran!', shout: '{n}!',
         lm_church: 'l’església', lm_tower: 'el campanar', lm_fountain: 'la font', lm_hall: 'l’Ajuntament', lm_jutera: 'la Jutera', lm_cultura: 'la Casa de la Cultura', lm_metro: 'el metro', lm_bull: 'el bou',
-        lm_falla: 'la falla', lm_band: 'la banda', lm_patrocinio: 'el col·legi Verge del Patrocini', lm_jaume: 'el col·legi Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomòbil', lm_quintos: 'els quintos', lm_purisimas: 'les purísimes', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'l’orxateria', lm_fronton: 'el frontó', lm_goal: 'la porteria', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor' },
+        lm_falla: 'la falla', lm_band: 'la banda', lm_patrocinio: 'el col·legi Verge del Patrocini', lm_jaume: 'el col·legi Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomòbil', lm_quintos: 'els quintos', lm_purisimas: 'les purísimes', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'l’orxateria', lm_fronton: 'el frontó', lm_goal: 'la porteria', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'els recres' },
     en: { intro: 'Under the rule of your patronage we want to be…', introSkip: 'Tap to start', clockDrop: 'The church clock has fallen!', clockGot: '⏰ +{s} seconds!', tagline: 'Swallow the town in 60 seconds and leave everything under the rule of its patronage.', best: 'Best', streak: 'Streak', play: 'Play', daily: 'Daily #{n}', dailyDone: 'Today: {s}', retry: 'Again', share: 'Share', menu: 'Menu',
         free: 'Free', dailyMode: 'Daily #{n}', newBest: 'New best.', toBest: '{d} points short of your best ({b}).', official: 'Official run for today. Streak: {s}.', practice: 'Practice: only the first run of the day counts.',
         hint: 'Drag to move', timeUp: 'Time’s up!', pct: 'You swallowed {p}% of Foios.', pctShort: '{p}% of Foios', bigger: 'Bigger!', shout: '{n}!',
         lm_church: 'the church', lm_tower: 'the bell tower', lm_fountain: 'the fountain', lm_hall: 'the town hall', lm_jutera: 'the Jutera', lm_cultura: 'the culture house', lm_metro: 'the metro', lm_bull: 'the bull',
-        lm_falla: 'the falla', lm_band: 'the band', lm_patrocinio: 'the Virgen del Patrocinio school', lm_jaume: 'the Rey en Jaume school', lm_refran: 'Refrán Torres', lm_discomovil: 'the Discomóvil', lm_quintos: 'the quintos', lm_purisimas: 'the purísimas', lm_paella: 'the paella', lm_caldereta: 'the caldereta', lm_horchata: 'the horchata bar', lm_fronton: 'the pelota court', lm_goal: 'the goal', lm_barraca: 'the barraca', lm_bar: 'the bar', lm_tractor: 'the tractor' }
+        lm_falla: 'the falla', lm_band: 'the band', lm_patrocinio: 'the Virgen del Patrocinio school', lm_jaume: 'the Rey en Jaume school', lm_refran: 'Refrán Torres', lm_discomovil: 'the Discomóvil', lm_quintos: 'the quintos', lm_purisimas: 'the purísimas', lm_paella: 'the paella', lm_caldereta: 'the caldereta', lm_horchata: 'the horchata bar', lm_fronton: 'the pelota court', lm_goal: 'the goal', lm_barraca: 'the barraca', lm_bar: 'the bar', lm_tractor: 'the tractor', lm_recres: 'the arcade' }
 });
-const EMOJI = { church: '⛪', tower: '🔔', fountain: '⛲', hall: '🏛️', jutera: '🏭', cultura: '🎭', metro: '🚇', bull: '🐂', falla: '🔥', band: '🎺', patrocinio: '🏫', jaume: '👑', quintos: '🧢', reloj: '⏰', refran: '🏃', discomovil: '🪩', purisimas: '👗', paella: '🥘', caldereta: '🍲', horchata: '🥛', fronton: '🧱', goal: '⚽', barraca: '🏡', bar: '🍺', tractor: '🚜' };
+const EMOJI = { church: '⛪', tower: '🔔', fountain: '⛲', hall: '🏛️', jutera: '🏭', cultura: '🎭', metro: '🚇', bull: '🐂', falla: '🔥', band: '🎺', patrocinio: '🏫', jaume: '👑', quintos: '🧢', reloj: '⏰', refran: '🏃', discomovil: '🪩', purisimas: '👗', paella: '🥘', caldereta: '🍲', horchata: '🥛', fronton: '🧱', goal: '⚽', barraca: '🏡', bar: '🍺', tractor: '🚜', recres: '🕹️' };
 const Art = (() => {
     const PAL = {
         k: '#2a1b2e', K: '#4b2e44', j: '#6b4a5e',
@@ -792,6 +793,42 @@ function sprBar() {
     p.put(14, 16, ['kkkkkkkkkkkk', 'kyNyNyNyNyNk', 'kkkkkkkkkkkk']);
     return p.outline('k');
 }
+function sprRecres() {
+    const w = 46, d = 8, fh = 24, p = new Pix(w + 2, d + fh + 4);
+    p.rect(1, 1, w, d, (X, Y) => shade(['K', 'j', 'K'], 0.5 + (h2(X, Y, 4) - 0.5) * 0.3, X, Y));
+    p.hl(1, 1, w, 'j');
+    p.rect(1, 1 + d, w, fh, (X, Y, i) => shade(['z', 'K', 'K', 'u'], 0.3 + i / w * 0.2, X, Y));
+    const bw = txtW('LOS RECRES') + 6, bx = (w + 2 - bw) >> 1;
+    p.rect(bx, d + 1, bw, 10, 'Z');
+    p.hl(bx, d + 1, bw, 'U');
+    p.hl(bx, d + 10, bw, 'U');
+    p.vl(bx, d + 1, 10, 'U');
+    p.vl(bx + bw - 1, d + 1, 10, 'U');
+    txt(p, bx + 3, d + 3, 'LOS RECRES', 'y');
+    p.hl(1, d + 12, w, 'x');
+    p.hl(1, d + 13, w, 'k');
+    p.rect(4, d + 15, 27, 15, 'Z');
+    p.hl(4, d + 15, 27, 'T');
+    p.hl(4, d + 30, 27, 'T');
+    [['x', 'y'], ['b', 'c'], ['G', 'L'], ['x', 'N'], ['u', 'U']].forEach(([a, b], i) => {
+        const cx = 6 + i * 5;
+        p.rect(cx, d + 18, 4, 12, 'K');
+        p.hl(cx, d + 18, 4, 'j');
+        p.rect(cx, d + 19, 4, 3, a);
+        p.set(cx + 1, d + 20, b);
+        p.set(cx + 2, d + 19, b);
+        p.set(cx + 1, d + 24, 'y');
+        p.set(cx + 2, d + 25, 'x');
+    });
+    p.rect(34, d + 16, 9, 15, 'T');
+    p.rect(35, d + 17, 7, 14, 'c');
+    p.vl(38, d + 17, 14, 'T');
+    p.put(34, d + 20, ['kkkkkkkkk']);
+    p.hl(1, d + 28, 3, 'y');
+    p.rect(1, d + fh + 1, w, 2, 'v');
+    p.rect(1, d + fh + 3, w, 1, 'V');
+    return p.outline('k');
+}
 const sprTable = () => spr(['..kkkkk..', '.kxwxwxk.', 'kxwxwxwxk', '.kkkkkkk.', '....k....', '.kE.k.Ek.', '.k.kkk.k.']);
 function sprCultura() {
     const w = 72, p = new Pix(w + 2, 38);
@@ -1150,10 +1187,11 @@ function sprLamp() {
     return p.outline('k');
 }
 function sprSphere() { const p = new Pix(8, 13); brick(p, 1, 6, 6, 6, BRICK, 0.8, 2); p.hl(1, 6, 6, 'i'); p.ell(4, 3.5, 2.6, 2.6, (X, Y, ex, ey) => shade(['v', 'i', 'w'], 0.7 - ex * 0.5 - ey * 0.4, X, Y)); return p.outline('k'); }
-const WW = 380, WH = 600, K = 0.7;
+const WW = 470, WH = 600, K = 0.7;
 const Z = {
-    town: [36, 56, 216, 556], metro: [216, 0, 250, WH], east: [250, 56, 302, 480], road: [302, 0, 318, WH], beach: [346, 0, 354, WH], sea: [354, 0, WW, WH],
-    plaza: [42, 188, 210, 264], park: [42, 318, 114, 390], field: [44, 462, 104, 552], fronton: [110, 458, 150, 504], pool: [112, 508, 150, 548], fallaSq: [160, 448, 214, 482], station: [208, 220, 258, 340]
+    town: [10, 76, 392, 496], metro: [0, 334, 440, 368], road: [0, 496, 440, 518], beach: [440, 0, 448, WH], sea: [448, 0, WW, WH],
+    eastA: [10, 378, 114, 496], eastB: [330, 356, 392, 440],
+    plaza: [126, 188, 294, 264], park: [298, 226, 370, 298], field: [16, 238, 76, 328], fronton: [82, 234, 122, 280], pool: [84, 284, 122, 324], fallaSq: [336, 300, 388, 330]
 };
 const inR = (r, x, y) => x >= r[0] && x < r[2] && y >= r[1] && y < r[3];
 function zoneAt(x, y) {
@@ -1165,7 +1203,7 @@ function zoneAt(x, y) {
         return 'road';
     if (inR(Z.metro, x, y))
         return 'metro';
-    if (inR(Z.east, x, y))
+    if (inR(Z.eastA, x, y) || inR(Z.eastB, x, y))
         return 'east';
     if (inR(Z.town, x, y))
         return 'town';
@@ -1180,6 +1218,23 @@ function plotOf(x, y) {
             return null;
     return { px, py, x0, y0, type: plotType(px, py) };
 }
+const EXCL = [
+    [124, 126, 296, 334], [138, 72, 158, 200], [10, 232, 126, 334], [279, 100, 347, 142], [306, 158, 358, 200], [296, 224, 372, 300], [330, 298, 392, 334],
+    [186, 368, 300, 388], [10, 378, 114, 496], [116, 378, 192, 440], [198, 378, 302, 404], [190, 404, 266, 454], [268, 402, 324, 450], [328, 356, 394, 444]
+];
+const ROW_BASES = [104, 146, 188, 230, 272, 314, 416, 456, 494];
+const exclAt = (x, y, m = 0) => EXCL.some(e => x >= e[0] - m && x < e[2] + m && y >= e[1] - m && y < e[3] + m);
+const ROWSEG = [];
+for (const base of ROW_BASES) {
+    let iv = [[12, 392]];
+    for (const e of EXCL)
+        if (e[3] > base - 32 && e[1] < base + 1)
+            iv = iv.flatMap(([a, b]) => (e[2] <= a || e[0] >= b ? [[a, b]] : [[a, Math.min(b, e[0])], [Math.max(a, e[2]), b]]));
+    for (const [a, b] of iv)
+        if (b - a >= 10)
+            ROWSEG.push([a, b, base]);
+}
+const BLOCKS = ROWSEG.map(([a, b, base]) => [a, base - 26, b, base]);
 let groundCanvas = null;
 function paintGround() {
     const S = new Pix(WW, WH);
@@ -1195,20 +1250,21 @@ function paintGround() {
                 c = shade(['S', 's', 's', 'i'], 0.55 + (vnoise(x * 0.4, y * 0.4, 2) - 0.5) * 0.6, x, y);
             else if (z === 'road') {
                 c = shade(['f', 'e', 'e', 'E'], 0.4 + (vnoise(x * 0.3, y * 0.3, 3) - 0.5) * 0.5, x, y);
-                if (x === Z.road[0] || x === Z.road[2] - 1)
+                if (y === Z.road[1] || y === Z.road[3] - 1)
                     c = 'F';
-                if (x === 309 && (y % 10) < 5)
+                if (y === 507 && (x % 10) < 5)
                     c = 'w';
             }
             else if (z === 'metro') {
                 c = shade(['f', 'e', 'I'], 0.5 + (h2(x, y, 5) - 0.5) * 0.9, x, y);
-                if (y % 3 === 0 && ((x >= 222 && x < 231) || (x >= 235 && x < 244)))
+                const ry = y - Z.metro[1];
+                if (((ry >= 5 && ry <= 13) || (ry >= 21 && ry <= 29)) && x % 3 === 0)
                     c = 'D';
-                if (x === 223 || x === 229 || x === 236 || x === 242)
+                if (ry === 3 || ry === 14 || ry === 19 || ry === 30)
                     c = 'I';
-                if (x === 224 || x === 230 || x === 237 || x === 243)
+                if (ry === 4 || ry === 15 || ry === 20 || ry === 31)
                     c = 'f';
-                if (x === 216 || x === 249)
+                if (ry === 0 || ry === 33)
                     c = 'g';
             }
             else if (z === 'east')
@@ -1241,7 +1297,7 @@ function paintGround() {
         return shade(['S', 's', 's', 'i'], (((x >> 3) + (y >> 3)) & 1 ? 0.62 : 0.5) + (vnoise(x * 0.3, y * 0.3, 2) - 0.5) * 0.3, x, y);
     });
     for (let i = 0; i < 6; i++)
-        S.rect(120 + i * 5, py1, 3, 6, 'w');
+        S.rect(204 + i * 5, py1, 3, 6, 'w');
     const [qx0, qy0, qx1, qy1] = Z.park;
     S.rect(qx0, qy0, qx1 - qx0, qy1 - qy0, (x, y) => {
         const cx = (qx0 + qx1) / 2, cy = (qy0 + qy1) / 2 + 4, d = Math.hypot((x - cx) / 1.2, y - cy);
@@ -1274,36 +1330,27 @@ function paintGround() {
     S.hl(ox0, oy0, ox1 - ox0, 'b');
     const [sx0, sy0, sx1, sy1] = Z.fallaSq;
     S.rect(sx0, sy0, sx1 - sx0, sy1 - sy0, (x, y) => ((x & 7) === 0 || (y & 7) === 0 ? 'S' : shade(['s', 's', 'i'], 0.55 + (h2(x, y) - 0.5) * 0.4, x, y)));
-    for (const [x0, y0, w, h] of [[44, 60, 66, 18], [162, 486, 52, 20]]) {
+    for (const [x0, y0, w, h] of [[282, 88, 66, 18], [270, 392, 52, 20]]) {
         S.rect(x0, y0, w, h, (x, y) => shade(['x', 'X'], 0.6 + (h2(x, y) - 0.5) * 0.3, x, y));
         S.rect(x0 + 4, y0 + 3, w - 8, h - 6, (x, y) => (x === x0 + 4 || y === y0 + 3 || x === x0 + w - 5 || y === y0 + h - 4 ? 'w' : null));
     }
-    for (const px of [208, 250]) {
-        S.rect(px, 230, 8, 104, (x, y) => shade(['E', 'F', 'i'], 0.55 + (h2(x, y, 6) - 0.5) * 0.5, x, y));
-        S.vl(px === 208 ? 215 : 250, 230, 104, 'y');
+    for (const py of [326, 368]) {
+        S.rect(190, py, 108, 8, (x, y) => shade(['E', 'F', 'i'], 0.55 + (h2(x, y, 6) - 0.5) * 0.5, x, y));
+        S.hl(190, py === 326 ? 333 : 368, 108, 'y');
     }
-    for (let y = 236; y < 334; y += 16)
-        S.hl(262, y, 36, 'w');
-    for (let x = 262; x < 300; x += 26)
-        S.vl(x, 236, 98, 'w');
+    for (let x = 200; x < 302; x += 24)
+        S.vl(x, 380, 22, 'w');
+    S.hl(200, 380, 98, 'w');
     const boat = new Pix(9, 9);
     boat.put(0, 0, ['....w....', '...wwk...', '..wwwk...', '.wwwwk...', '....k....', 'kHHHHHHHk', '.kHHHHHk.']);
     for (let j = 0; j < 9; j++)
         for (let i = 0; i < 9; i++) {
             const c = boat.get(i, j);
             if (c)
-                S.set(364 + i, 150 + j, c);
+                S.set(458 + i, 220 + j, c);
         }
     return S.canvas();
 }
-const BLOCKS = [
-    [42, 58, 112, 112], [118, 58, 210, 112],
-    [42, 120, 56, 186], [152, 120, 210, 186],
-    [42, 266, 210, 300],
-    [118, 314, 210, 390],
-    [42, 398, 210, 446],
-    [160, 484, 210, 540]
-];
 let OBJ = [], totalArea = 0;
 const imgCache = new Map();
 function cached(key, make) { if (!imgCache.has(key)) {
@@ -1355,103 +1402,50 @@ function buildWorld(rnd) {
             x += w;
         }
     }
-    row(118, 210, 84, { two: 0.4 });
-    row(118, 210, 112);
-    row(42, 56, 154, { two: 1 });
-    row(42, 56, 186, { two: 1 });
-    row(152, 210, 154);
-    row(152, 210, 186, { two: 0.8 });
-    const hq = im(sprHorchateria());
-    add(hq, 42, 300 - hq.h, { ay: hq.h - 6, size: 16, tag: 'horchata', sh: [1, 10, 38, 16, 12] });
-    row(192, 210, 300);
-    row(194, 210, 352);
-    row(118, 210, 390);
-    row(42, 112, 420, { two: 0.3 });
-    row(118, 210, 420, { two: 0.3 });
-    row(42, 112, 446);
-    row(118, 160, 446);
-    row(2, 34, 120, { two: 0 });
+    for (const [a, b, base] of ROWSEG)
+        row(a, b, base, { two: base > 400 ? 0.35 : 0.5 });
+    const street = () => { for (let k = 0; k < 12; k++) {
+        const x = R(14, 390), y = pick(ROW_BASES) + R(2, 8);
+        if (!exclAt(x, y, 2) && !exclAt(x + 8, y, 2))
+            return [x, y];
+    } return [20, 100]; };
+    const PX = 84;
     const ch = im(sprChurch());
-    add(ch, 74, 190 - ch.h, { ay: ch.h - 14, size: 34, tag: 'church', sh: [2, 40, 76, 50, 26] });
+    add(ch, 74 + PX, 190 - ch.h, { ay: ch.h - 14, size: 34, tag: 'church', sh: [2, 40, 76, 50, 26] });
     const tw = im(sprTower());
-    towerTop = [56 + (tw.w >> 1) - 4, 191 - tw.h + 10];
-    towerObj = add(tw, 56, 191 - tw.h, { ay: tw.h - 6, size: 24, tag: 'tower', sh: [2, 50, 16, 66, 60] });
+    towerTop = [56 + PX + (tw.w >> 1) - 4, 191 - tw.h + 10];
+    towerObj = add(tw, 56 + PX, 191 - tw.h, { ay: tw.h - 6, size: 24, tag: 'tower', sh: [2, 50, 16, 66, 60] });
     const fo = im(sprFountain());
-    add(fo, 108, 252 - fo.h, { ay: fo.h - 9, size: 14, tag: 'fountain', sh: [4, 14, 28, 12, 6] });
+    add(fo, 108 + PX, 252 - fo.h, { ay: fo.h - 9, size: 14, tag: 'fountain', sh: [4, 14, 28, 12, 6] });
     for (const [x, y, s] of [[60, 232, 1], [168, 232, 2], [60, 262, 3], [168, 262, 4]]) {
         const p = cached('palm' + s, () => sprPalm(s));
-        add(p, x - 11, y - p.h, { ay: p.h - 3, size: 7, sh: [9, 4, 6, 6, 12] });
+        add(p, x + PX - 11, y - p.h, { ay: p.h - 3, size: 7, sh: [9, 4, 6, 6, 12] });
     }
     const hall = im(sprTownHall());
-    add(hall, 80, 300 - hall.h, { ay: hall.h - 8, size: 26, tag: 'hall', sh: [1, 13, 64, 26, 12] });
+    add(hall, 80 + PX, 300 - hall.h, { ay: hall.h - 8, size: 26, tag: 'hall', sh: [1, 13, 64, 26, 12] });
     const bar = im(sprBar());
-    add(bar, 150, 300 - bar.h, { ay: bar.h - 6, size: 16, tag: 'bar', sh: [1, 12, 40, 16, 12] });
+    add(bar, 150 + PX, 300 - bar.h, { ay: bar.h - 6, size: 16, tag: 'bar', sh: [1, 12, 40, 16, 12] });
+    const hq = im(sprHorchateria());
+    add(hq, 42 + PX, 300 - hq.h, { ay: hq.h - 6, size: 16, tag: 'horchata', sh: [1, 10, 38, 16, 12] });
     for (const [x, y] of [[148, 272], [162, 278], [176, 272], [190, 280]])
-        add(cached('table', sprTable), x, y, { size: 4, sh: [6, 3, 3, 3, 4] });
+        add(cached('table', sprTable), x + PX, y, { size: 4, sh: [6, 3, 3, 3, 4] });
     for (const [x, y] of [[46, 196], [46, 240], [200, 196], [200, 244]])
-        add(cached('pot', sprPot), x, y, { size: 3, sh: [5, 2, 2, 2, 2] });
+        add(cached('pot', sprPot), x + PX, y, { size: 3, sh: [5, 2, 2, 2, 2] });
     for (const [x, y] of [[84, 214], [146, 214], [84, 258], [146, 258]])
-        add(cached('bench', sprBench), x, y, { size: 4.5, sh: [7, 0, 2, 3, 3] });
+        add(cached('bench', sprBench), x + PX, y, { size: 4.5, sh: [7, 0, 2, 3, 3] });
     for (let i = 0; i < 9; i++)
-        dove(R(46, 206), R(196, 262));
+        dove(R(46 + PX, 206 + PX), R(196, 262));
     for (let i = 0; i < 12; i++)
-        person(R(48, 204), R(198, 262));
+        person(R(48 + PX, 204 + PX), R(198, 262));
     for (let i = 0; i < 6; i++)
         musician(i);
-    for (let i = 0; i < 6; i++) {
-        const x = R(46, 200), y = pick([112, 186, 300, 390, 420, 446]) + 3;
-        add(cached('granny', sprGranny), x, y - 6, { size: 3, sh: [5, 4, 2, 2, 3] });
-    }
-    const s1 = sprSchool(64, 'VIRGEN DEL', 'PATROCINIO');
-    add(im(s1.p), 43, 112 - s1.p.h + 1, { ay: s1.p.h - 1 - s1.d / 2, size: 24, tag: 'patrocinio', sh: [1, 1 + s1.d, 64, s1.fh, 14] });
-    const s2 = sprSchool(50, 'REY EN', 'JAUME');
-    add(im(s2.p), 161, 540 - s2.p.h + 1, { ay: s2.p.h - 1 - s2.d / 2, size: 22, tag: 'jaume', sh: [1, 1 + s2.d, 50, s2.fh, 14] });
-    for (const [x, y] of [[46, 62], [100, 62], [164, 488], [204, 488]])
-        add(cached('hoop', sprHoop), x, y, { size: 3.5, sh: [5, 6, 2, 3, 4] });
-    for (let i = 0; i < 6; i++)
-        person(R(48, 104), R(64, 74), true);
-    for (let i = 0; i < 5; i++)
-        person(R(166, 206), R(490, 502), true);
-    for (let x = 120; x < 206; x += 21) {
-        add(cached('barrier', sprBarrier), x, 302, { size: 5, sh: [19, 1, 1, 4, 3] });
-        add(cached('barrier', sprBarrier), x, 309, { size: 5, sh: [19, 1, 1, 4, 3] });
-    }
-    bull();
-    for (let i = 0; i < 4; i++)
-        runner(i);
-    const pf = im(sprParkFountain());
-    add(pf, 56, 372 - pf.h, { ay: pf.h - 10, size: 16, tag: 'fountain', sh: [4, 20, 36, 14, 8] });
-    for (const [x, y, s] of [[50, 334, 1], [98, 336, 2], [48, 388, 3], [102, 390, 4], [76, 330, 5]]) {
-        const p = cached('pine' + s, () => sprPine(s));
-        add(p, x - 13, y - p.h, { ay: p.h - 3, size: 9, sh: [4, 4, 18, 8, 12] });
-    }
-    for (const [x, y] of [[60, 344], [92, 344], [60, 384], [92, 384]])
-        add(cached('lamp', sprLamp), x - 5, y - 25, { size: 4, sh: [5, 18, 3, 6, 10] });
-    for (const [x, y] of [[44, 352], [44, 364], [108, 352], [108, 364]])
-        add(cached('sphere', sprSphere), x - 4, y - 12, { size: 3.5, sh: [1, 6, 6, 5, 5] });
-    for (const [x, y] of [[66, 330], [86, 330]])
-        add(cached('bench', sprBench), x, y, { size: 4.5, sh: [7, 0, 2, 3, 3] });
-    for (let i = 0; i < 6; i++)
-        person(R(48, 108), R(322, 386));
-    for (let i = 0; i < 5; i++)
-        dove(R(50, 104), R(340, 380));
-    const cu = im(sprCultura());
-    add(cu, 120, 352 - cu.h, { ay: cu.h - 7, size: 27, tag: 'cultura', sh: [1, 12, 72, 23, 12] });
-    const fa = im(sprFalla());
-    add(fa, 172, 480 - fa.h, { ay: fa.h - 5, size: 13, tag: 'falla', sh: [4, 30, 26, 16, 18] });
-    for (let i = 0; i < 6; i++)
-        person(R(162, 210), R(452, 480));
     {
         const ca = cached('carpa', sprCarpa);
-        add(ca, 181, 240 - ca.h, { ay: ca.h - 3, size: 14, tag: 'discomovil', sh: [2, 14, 44, 6, 14] });
+        add(ca, 181 + PX, 240 - ca.h, { ay: ca.h - 3, size: 14, tag: 'discomovil', sh: [2, 14, 44, 6, 14] });
     }
-    for (const [x, y] of [[118, 361], [144, 361]]) {
-        const pa = cached('paella', sprPaella);
-        add(pa, x, y - pa.h, { ay: pa.h - 3, size: 8, tag: 'paella', sh: [2, 6, 18, 4, 8] });
-    }
-    for (const [x, y] of [[176, 361], [194, 361]]) {
-        const ca = cached('caldereta', sprCaldereta);
-        add(ca, x, y - ca.h, { ay: ca.h - 3, size: 7, tag: 'caldereta', sh: [2, 12, 12, 4, 8] });
+    {
+        const pp = cached('pp', () => sprPancarta('PURÍSIMAS', 'b', 'w'));
+        add(pp, 104 + PX, 216 - pp.h, { ay: pp.h - 2, size: 6, tag: 'purisimas', sh: [2, 8, pp.w - 4, 3, 8] });
     }
     function group(fn, key, x, y, n, tag, shirtRange) {
         const f0 = cached(key + 0, () => fn(0)), f1 = cached(key + 1, () => fn(1));
@@ -1460,90 +1454,156 @@ function buildWorld(rnd) {
             add(f0, gx, gy - 7, { size: 2.6, tag, frames: [f0.c, f1.c], mov: walker, data: { hx: gx, hy: gy - 7, tx: gx, ty: gy - 7, v: R(6, 10), t: R(0, 3), range: 16 } });
         }
     }
+    group(sprPurisima, 'purisima', 122 + PX, 206, 6, 'purisimas', 16);
+    for (let i = 0; i < 6; i++) {
+        const [x, y] = street();
+        add(cached('granny', sprGranny), x, y - 6, { size: 3, sh: [5, 4, 2, 2, 3] });
+    }
+    const s1 = sprSchool(64, 'VIRGEN DEL', 'PATROCINIO');
+    add(im(s1.p), 281, 141 - s1.p.h + 1, { ay: s1.p.h - 1 - s1.d / 2, size: 24, tag: 'patrocinio', sh: [1, 1 + s1.d, 64, s1.fh, 14] });
+    const s2 = sprSchool(50, 'REY EN', 'JAUME');
+    add(im(s2.p), 271, 446 - s2.p.h + 1, { ay: s2.p.h - 1 - s2.d / 2, size: 22, tag: 'jaume', sh: [1, 1 + s2.d, 50, s2.fh, 14] });
+    for (const [x, y] of [[284, 92], [338, 92], [272, 394], [312, 394]])
+        add(cached('hoop', sprHoop), x, y, { size: 3.5, sh: [5, 6, 2, 3, 4] });
+    for (let i = 0; i < 6; i++)
+        person(R(284, 340), R(92, 102), true);
+    for (let i = 0; i < 5; i++)
+        person(R(274, 314), R(396, 408), true);
+    {
+        const rc = im(sprRecres());
+        add(rc, 308, 198 - rc.h, { ay: rc.h - 1 - 4, size: 18, tag: 'recres', sh: [1, 9, 46, 24, 14] });
+    }
+    for (let i = 0; i < 6; i++)
+        person(R(308, 352), R(199, 206), true);
+    for (let x = 150; x < 290; x += 21) {
+        add(cached('barrier', sprBarrier), x, 302, { size: 5, sh: [19, 1, 1, 4, 3] });
+        add(cached('barrier', sprBarrier), x, 309, { size: 5, sh: [19, 1, 1, 4, 3] });
+    }
+    bull();
+    for (let i = 0; i < 4; i++)
+        runner(i);
+    const QX = 256, QY = -92;
+    const pf = im(sprParkFountain());
+    add(pf, 56 + QX, 372 + QY - pf.h, { ay: pf.h - 10, size: 16, tag: 'fountain', sh: [4, 20, 36, 14, 8] });
+    for (const [x, y, s] of [[50, 334, 1], [98, 336, 2], [48, 388, 3], [102, 390, 4], [76, 330, 5]]) {
+        const p = cached('pine' + s, () => sprPine(s));
+        add(p, x + QX - 13, y + QY - p.h, { ay: p.h - 3, size: 9, sh: [4, 4, 18, 8, 12] });
+    }
+    for (const [x, y] of [[60, 344], [92, 344], [60, 384], [92, 384]])
+        add(cached('lamp', sprLamp), x + QX - 5, y + QY - 25, { size: 4, sh: [5, 18, 3, 6, 10] });
+    for (const [x, y] of [[44, 352], [44, 364], [108, 352], [108, 364]])
+        add(cached('sphere', sprSphere), x + QX - 4, y + QY - 12, { size: 3.5, sh: [1, 6, 6, 5, 5] });
+    for (const [x, y] of [[66, 330], [86, 330]])
+        add(cached('bench', sprBench), x + QX, y + QY, { size: 4.5, sh: [7, 0, 2, 3, 3] });
+    for (let i = 0; i < 6; i++)
+        person(R(48 + QX, 108 + QX), R(322 + QY, 386 + QY));
+    for (let i = 0; i < 5; i++)
+        dove(R(50 + QX, 104 + QX), R(340 + QY, 380 + QY));
+    const cu = im(sprCultura());
+    add(cu, 118, 436 - cu.h, { ay: cu.h - 7, size: 27, tag: 'cultura', sh: [1, 12, 72, 23, 12] });
+    for (let i = 0; i < 6; i++)
+        person(R(120, 190), R(438, 450));
+    for (const [x, y] of [[194, 436], [216, 436]]) {
+        const pa = cached('paella', sprPaella);
+        add(pa, x, y - pa.h, { ay: pa.h - 3, size: 8, tag: 'paella', sh: [2, 6, 18, 4, 8] });
+    }
+    for (const [x, y] of [[240, 436], [252, 448]]) {
+        const ca = cached('caldereta', sprCaldereta);
+        add(ca, x, y - ca.h, { ay: ca.h - 3, size: 7, tag: 'caldereta', sh: [2, 12, 12, 4, 8] });
+    }
     {
         const pq = cached('pq', () => sprPancarta('QUINTOS', 'x', 'w'));
-        add(pq, 96, 368 - pq.h, { ay: pq.h - 2, size: 6, tag: 'quintos', sh: [2, 8, pq.w - 4, 3, 8] });
+        add(pq, 196, 424 - pq.h, { ay: pq.h - 2, size: 6, tag: 'quintos', sh: [2, 8, pq.w - 4, 3, 8] });
     }
-    {
-        const pp = cached('pp', () => sprPancarta('PURÍSIMAS', 'b', 'w'));
-        add(pp, 104, 216 - pp.h, { ay: pp.h - 2, size: 6, tag: 'purisimas', sh: [2, 8, pp.w - 4, 3, 8] });
-    }
-    group(sprQuinto, 'quinto', 150, 366, 6, 'quintos', 22);
-    group(sprPurisima, 'purisima', 122, 206, 6, 'purisimas', 16);
-    add(cached('goal', sprGoal), 64, 457, { size: 7, tag: 'goal', sh: [18, 0, 1, 5, 3] });
-    add(cached('goal', sprGoal), 64, 546, { size: 7, tag: 'goal', sh: [18, 0, 1, 5, 3] });
-    for (const [x, y] of [[38, 456], [104, 456], [38, 548], [104, 548]])
+    group(sprQuinto, 'quinto', 228, 448, 6, 'quintos', 22);
+    const fa = im(sprFalla());
+    add(fa, 342, 328 - fa.h, { ay: fa.h - 5, size: 13, tag: 'falla', sh: [4, 30, 26, 16, 18] });
+    for (let i = 0; i < 6; i++)
+        person(R(336, 386), R(304, 330));
+    add(cached('goal', sprGoal), 36, 233, { size: 7, tag: 'goal', sh: [18, 0, 1, 5, 3] });
+    add(cached('goal', sprGoal), 36, 322, { size: 7, tag: 'goal', sh: [18, 0, 1, 5, 3] });
+    for (const [x, y] of [[10, 232], [76, 232], [10, 324], [76, 324]])
         add(cached('flood', sprFloodlight), x - 5, y - 44, { size: 9, sh: [4, 36, 2, 8, 30] });
     for (let i = 0; i < 10; i++)
-        person(R(48, 100), R(466, 548), false, i < 5 ? 'x' : 'B');
+        person(R(20, 72), R(242, 324), false, i < 5 ? 'x' : 'B');
     {
         const r0 = cached('refran0', () => sprNamed('REFRÁN TORRES', 'x', 'Y', 0)), r1 = cached('refran1', () => sprNamed('REFRÁN TORRES', 'x', 'Y', 1));
-        add(r0, 62, 500, { size: 3, tag: 'refran', frames: [r0.c, r1.c], mov: walker, data: { hx: 62, hy: 500, tx: 62, ty: 500, v: 8, t: 0, range: 18 } });
+        add(r0, 34, 276, { size: 3, tag: 'refran', frames: [r0.c, r1.c], mov: walker, data: { hx: 34, hy: 276, tx: 34, ty: 276, v: 8, t: 0, range: 18 } });
     }
     const fr = im(sprFronton());
-    add(fr, 108, 488 - fr.h, { ay: fr.h - 6, size: 18, tag: 'fronton', sh: [1, 1, 44, 28, 14] });
+    add(fr, 80, 264 - fr.h, { ay: fr.h - 6, size: 18, tag: 'fronton', sh: [1, 1, 44, 28, 14] });
     for (let i = 0; i < 3; i++)
-        person(R(114, 146), R(490, 502), false, 'w');
-    add(cached('lifeguard', sprLifeguard), 150, 516, { size: 3.5, sh: [4, 3, 1, 4, 5] });
-    for (const [x, y, c] of [[114, 548, 'x'], [128, 549, 'y'], [142, 548, 'B']])
+        person(R(86, 118), R(266, 278), false, 'w');
+    add(cached('lifeguard', sprLifeguard), 122, 292, { size: 3.5, sh: [4, 3, 1, 4, 5] });
+    for (const [x, y, c] of [[86, 324, 'x'], [100, 325, 'y'], [114, 324, 'B']])
         add(cached('umb' + c, () => sprUmbrella(c)), x, y, { size: 4, sh: [8, 2, 1, 3, 4] });
     for (let i = 0; i < 4; i++)
-        person(R(114, 148), R(512, 544), false, 'n');
-    for (const [y, x0, x1] of [[112, 46, 206], [300, 46, 206], [390, 46, 206], [446, 46, 206], [446, 160, 206]]) {
-        for (let x = x0 + R(0, 20); x < x1 - 24; x += R(30, 60)) {
-            const c = pick(CARCOLS);
-            add(cached('carH' + c[0], () => sprCarH(c)), x, y + 1, { size: 7, sh: [1, 4, 22, 7, 5] });
-        }
+        person(R(86, 120), R(288, 320), false, 'n');
+    for (let x = 140 + R(0, 10); x < 280; x += R(34, 56)) {
+        const c = pick(CARCOLS);
+        add(cached('carH' + c[0], () => sprCarH(c)), x, 318, { size: 7, sh: [1, 4, 22, 7, 5] });
     }
-    for (let i = 0; i < 8; i++) {
-        const x = R(46, 206), y = pick([116, 304, 394, 450]);
+    for (const base of ROW_BASES)
+        for (let k = 0; k < 3; k++) {
+            const x = R(14, 380);
+            if (exclAt(x, base + 3, 2) || exclAt(x + 24, base + 3, 2))
+                continue;
+            const c = pick(CARCOLS);
+            add(cached('carH' + c[0], () => sprCarH(c)), x, base + 1, { size: 7, sh: [1, 4, 22, 7, 5] });
+        }
+    for (let i = 0; i < 10; i++) {
+        const [x, y] = street();
         add(cached('moto', sprMoto), x, y, { size: 3, sh: [2, 3, 2, 2, 2] });
     }
-    for (let i = 0; i < 10; i++) {
-        const x = R(44, 208), y = pick([116, 304, 394, 450]);
+    for (let i = 0; i < 12; i++) {
+        const [x, y] = street();
         add(cached('bin', sprBin), x, y, { size: 3.5, sh: [4, 3, 2, 3, 3] });
     }
-    for (let i = 0; i < 8; i++) {
-        const x = R(44, 208), y = pick([115, 393, 449]);
+    for (let i = 0; i < 10; i++) {
+        const [x, y] = street();
         add(cached('bike', sprBike), x, y, { size: 2.6, sh: [5, 2, 2, 2, 2] });
     }
-    for (let i = 0; i < 10; i++)
-        person(R(44, 210), pick([116, 304, 394, 450]) + R(-3, 4));
-    for (let i = 0; i < 5; i++)
-        dove(R(44, 210), pick([116, 394, 450]) + R(0, 4));
-    for (const [x, side] of [[204, 0], [248, 1]])
-        for (const y of [246, 290])
-            add(cached('marq', sprMarquee), x, y, { size: 12, sh: [1, 2, 10, 38, 6] });
+    for (let i = 0; i < 18; i++) {
+        const [x, y] = street();
+        person(x, y + R(-3, 4));
+    }
+    for (let i = 0; i < 8; i++) {
+        const [x, y] = street();
+        dove(x, y);
+    }
+    for (const [x, y] of [[196, 322], [246, 322], [196, 366], [246, 366]]) {
+        const m = cachedRot('marq', sprMarquee, 1);
+        add(m, x, y, { size: 12, sh: [2, 2, 40, 6, 5] });
+    }
     for (let i = 0; i < 6; i++)
-        person(R(209, 214), R(232, 330));
+        person(R(194, 294), R(329, 332));
     for (let i = 0; i < 5; i++)
-        person(R(251, 256), R(232, 330));
+        person(R(194, 294), R(371, 375));
     train(0);
     train(1);
+    for (let i = 0; i < 4; i++)
+        if (rnd() < 0.8) {
+            const c = pick(CARCOLS);
+            add(cached('carH' + c[0], () => sprCarH(c)), 202 + i * 24, 384, { size: 7, sh: [1, 4, 22, 7, 5] });
+        }
     const ju = im(sprJutera());
-    add(ju, 252, 212 - ju.h, { ay: ju.h - 10, size: 24, tag: 'jutera', sh: [1, 3, 50, 37, 14] });
+    add(ju, 334, 436 - ju.h, { ay: ju.h - 10, size: 24, tag: 'jutera', sh: [1, 3, 50, 37, 14] });
     const cm = im(sprChimney());
-    add(cm, 290, 200 - cm.h, { ay: cm.h - 4, size: 15, tag: 'jutera', sh: [1, 30, 8, 30, 40] });
+    add(cm, 378, 428 - cm.h, { ay: cm.h - 4, size: 15, tag: 'jutera', sh: [1, 30, 8, 30, 40] });
     const wh = im(sprWarehouse());
-    add(wh, 252, 110 - wh.h, { ay: wh.h - 7, size: 21, sh: [1, 13, 46, 18, 12] });
+    add(wh, 20, 424 - wh.h, { ay: wh.h - 7, size: 21, sh: [1, 13, 46, 18, 12] });
     for (let i = 0; i < 10; i++)
-        add(cached('crate', sprCrate), 254 + (i % 5) * 9, 114 + (i / 5 | 0) * 7, { size: 3, sh: [6, 1, 1, 4, 2] });
-    add(cached('truck', () => sprCarV(['b', 'B', 'c'])), 286, 120, { size: 8, sh: [1, 1, 12, 22, 4] });
-    for (let r = 0; r < 6; r++)
-        for (let c = 0; c < 2; c++)
-            if (rnd() < 0.7) {
-                const col = pick(CARCOLS);
-                add(cached('carV' + col[0], () => sprCarV(col)), 266 + c * 18 + R(-1, 1), 238 + r * 16 - 6, { size: 7.5, sh: [1, 1, 12, 22, 4] });
-            }
-    for (const [y, col] of [[400, 'b'], [470, 'G']]) {
-        const n = im(sprNave(48, col));
-        add(n, 252, y - n.h, { ay: n.h - 9, size: 22, sh: [1, 1, 48, 34, 10] });
+        add(cached('crate', sprCrate), 24 + (i % 5) * 9, 428 + (i / 5 | 0) * 7, { size: 3, sh: [6, 1, 1, 4, 2] });
+    add(cached('truck', () => sprCarV(['b', 'B', 'c'])), 86, 392, { size: 8, sh: [1, 1, 12, 22, 4] });
+    {
+        const n = im(sprNave(48, 'b'));
+        add(n, 22, 490 - n.h, { ay: n.h - 9, size: 22, sh: [1, 1, 48, 34, 10] });
     }
     for (let i = 0; i < 5; i++)
-        person(R(254, 298), R(404, 430), false, 'Y');
+        person(R(24, 100), R(458, 488), false, 'Y');
     for (let i = 0; i < 6; i++)
-        add(cached('cone', sprCone), R(254, 296), R(406, 432), { size: 2.5, sh: [3, 2, 2, 2, 2] });
-    for (let i = 0; i < 6; i++)
+        add(cached('cone', sprCone), R(24, 100), R(452, 488), { size: 2.5, sh: [3, 2, 2, 2, 2] });
+    for (let i = 0; i < 7; i++)
         roadCar(i, rnd);
     const seen = new Set();
     for (let y = 0; y < WH; y += 36)
@@ -1590,20 +1650,42 @@ function buildWorld(rnd) {
         const f0 = cached('mus0', () => sprMusician(0)), f1 = cached('mus1', () => sprMusician(1));
         add(f0, 0, 0, { size: 2.6, tag: 'band', frames: [f0.c, f1.c], mov: marcher, data: { s: i * 9 } });
     }
-    function bull() { const f0 = cached('bull0', () => sprBull(0)), f1 = cached('bull1', () => sprBull(1)); add(f0, 140, 312, { size: 4.5, tag: 'bull', frames: [f0.c, f1.c], mov: bullRun, data: { dir: 1, v: 26 } }); }
-    function runner(i) { const f0 = cached('run0', () => sprRunner(0)), f1 = cached('run1', () => sprRunner(1)); add(f0, 150 + i * 12, 308, { size: 2.4, frames: [f0.c, f1.c], mov: runnerRun, data: { off: 14 + i * 9 } }); }
+    function bull() { const f0 = cached('bull0', () => sprBull(0)), f1 = cached('bull1', () => sprBull(1)); add(f0, 200, 312, { size: 4.5, tag: 'bull', frames: [f0.c, f1.c], mov: bullRun, data: { dir: 1, v: 26 } }); }
+    function runner(i) { const f0 = cached('run0', () => sprRunner(0)), f1 = cached('run1', () => sprRunner(1)); add(f0, 170 + i * 12, 308, { size: 2.4, frames: [f0.c, f1.c], mov: runnerRun, data: { off: 14 + i * 9 } }); }
     function train(dir) {
         for (let k = 0; k < 3; k++) {
-            const cimg = cached('train' + (dir ? (k === 2 ? 1 : 0) : (k === 0 ? 1 : 0)), () => sprTrainCar(dir ? k === 2 : k === 0));
-            add(cimg, dir ? 236 : 222, 0, { size: 15, tag: 'metro', mov: trainMove, data: { dir, k, phase: dir ? 4 : 0 }, ms: true });
+            const cimg = cachedRot('train' + (k === 0 ? 1 : 0), () => sprTrainCar(k === 0), dir ? -1 : 1);
+            add(cimg, 0, dir ? 352 : 337, { size: 15, tag: 'metro', mov: trainMove, data: { dir, k, phase: dir ? 2 : 0 }, ms: true });
         }
     }
 }
 function roadCar(i, rnd) {
-    const col = CARCOLS[i % CARCOLS.length], c = cached('carV' + col[0], () => sprCarV(col));
-    add(c, i % 2 ? 308 : 303, (i * 137) % WH, { size: 7.5, mov: roadMove, data: { dir: i % 2 ? -1 : 1, v: 34 + (i * 7) % 14 } });
+    const col = CARCOLS[i % CARCOLS.length], c = cached('carH' + col[0], () => sprCarH(col)), dir = i % 2 ? -1 : 1;
+    const o = add(c, (i * 137) % 440, dir > 0 ? 504 : 494, { size: 7.5, mov: roadMove, data: { dir, v: 34 + (i * 7) % 14 } });
+    o.flip = dir < 0;
 }
-let hole = { x: 126, y: 276, r: 7, vx: 0, vy: 0 }, T = 0;
+function cachedRot(key, make, dir) {
+    const k = key + ':' + dir;
+    if (!imgCache.has(k)) {
+        const src = cached(key, make), cv = document.createElement('canvas');
+        cv.width = src.h;
+        cv.height = src.w;
+        const g = cv.getContext('2d');
+        g.imageSmoothingEnabled = false;
+        if (dir > 0) {
+            g.translate(src.h, 0);
+            g.rotate(Math.PI / 2);
+        }
+        else {
+            g.translate(0, src.w);
+            g.rotate(-Math.PI / 2);
+        }
+        g.drawImage(src.c, 0, 0);
+        imgCache.set(k, { c: cv, w: src.h, h: src.w });
+    }
+    return imgCache.get(k);
+}
+let hole = { x: 190, y: 246, r: 7, vx: 0, vy: 0 }, T = 0;
 function nearHole(o, extra) { const dx = o.x + o.ax - hole.x, dy = o.y + o.ay - hole.y; return Math.hypot(dx, dy) < hole.r + extra ? [dx, dy] : null; }
 function walker(o, dt) {
     const d = o.data;
@@ -1654,7 +1736,7 @@ function hopper(o, dt) {
 function marcher(o, dt) {
     const d = o.data;
     d.s += dt * 7;
-    const L = [[70, 270], [190, 270], [190, 204], [70, 204]], seg = [120, 66, 120, 66], tot = 372;
+    const L = [[154, 270], [274, 270], [274, 204], [154, 204]], seg = [120, 66, 120, 66], tot = 372;
     let s = ((d.s % tot) + tot) % tot, i = 0;
     while (s > seg[i]) {
         s -= seg[i];
@@ -1670,9 +1752,9 @@ function bullRun(o, dt) {
     bullObj = o;
     const d = o.data;
     o.x += d.dir * d.v * dt;
-    if (o.x > 200)
+    if (o.x > 270)
         d.dir = -1;
-    if (o.x < 122)
+    if (o.x < 152)
         d.dir = 1;
     o.flip = d.dir < 0;
     o.moving = true;
@@ -1685,29 +1767,26 @@ function runnerRun(o, dt) {
     }
     const tx = b.x + b.data.dir * d.off;
     o.x += clamp(tx - o.x, -40 * dt, 40 * dt);
-    o.x = clamp(o.x, 120, 206);
+    o.x = clamp(o.x, 150, 290);
     o.moving = true;
 }
 function trainMove(o, dt) {
     const d = o.data, cyc = 22, t = ((T + d.phase * 5.5) % cyc + cyc) % cyc;
-    const stop = 270, len = WH + 160, v = 70;
+    const stop = d.dir ? 226 : 290, v = 70, tArr = (stop + 80) / v;
     let pos;
-    const tArr = (stop + 80) / v;
     if (t < tArr)
         pos = t * v - 80;
     else if (t < tArr + 4)
         pos = stop;
     else
         pos = stop + (t - tArr - 4) * v;
-    const y = d.dir ? WH - pos : pos;
-    o.y = d.dir ? y + d.k * 34 - 60 : y - d.k * 34 - 36;
-    o.moving = t > tArr && t < tArr + 4 ? false : true;
-    if (pos > len)
-        o.y = -200;
+    const fx = d.dir ? 416 - pos : pos;
+    o.x = d.dir ? fx + d.k * 34 : fx - (d.k + 1) * 34 + 2;
+    o.moving = !(t > tArr && t < tArr + 4);
 }
-function roadMove(o, dt) { const d = o.data; o.y += d.dir * d.v * dt; if (o.y > WH + 30)
-    o.y = -30; if (o.y < -30)
-    o.y = WH + 30; }
+function roadMove(o, dt) { const d = o.data; o.x += d.dir * d.v * dt; if (o.x > 440)
+    o.x = -30; if (o.x < -30)
+    o.x = 440; }
 const holeCache = new Map();
 function holeSprite(r) {
     r = Math.max(4, Math.round(r));
@@ -1766,7 +1845,7 @@ const DUR = 60, R0 = 6.5, GROW = 0.1;
 const CLOCK_BONUS = 8, CLOCK_LIFE = 14;
 let clockObj = null, clockAt = 0, bonusT = 0, towerTop = [66, 140], towerObj = null;
 let state = 'menu', mode = 'free', score = 0, eaten = 0, timeLeft = DUR, rShow = R0, falling = [], floats = [], eatenTags = [], combo = 0, lastEat = -9, level = 0;
-let cam = { x: 126, y: 250, span: 100 }, joy = null, keys = {}, hintT = 0, endT = 0, pulse = 0;
+let cam = { x: 190, y: 246, span: 100 }, joy = null, keys = {}, hintT = 0, endT = 0, pulse = 0;
 let best = Shell.store.get('tragon:best', 0);
 const LEVELS = [10, 15, 21, 28, 37, 48, 60];
 function newGame(m) {
@@ -1774,7 +1853,7 @@ function newGame(m) {
     const rnd = Math.random;
     totalArea = 0;
     buildWorld(rnd);
-    hole = { x: 80, y: 246, r: R0, vx: 0, vy: 0 };
+    hole = { x: 190, y: 246, r: R0, vx: 0, vy: 0 };
     rShow = R0;
     clockObj = null;
     clockAt = 15 + Math.random() * 12;
@@ -2242,6 +2321,41 @@ function frame(now) {
     requestAnimationFrame(frame);
 }
 groundCanvas = paintGround();
+function paintTitle() {
+    const cvT = $('titleC'), text = 'Traga Foios', fs = 14, font = '700 ' + fs + 'px "Pixelify Sans", monospace';
+    const m = document.createElement('canvas'), mg = m.getContext('2d');
+    mg.font = font;
+    const w = Math.ceil(mg.measureText(text).width) + 3, h = fs + 5;
+    m.width = w;
+    m.height = h;
+    mg.font = font;
+    mg.fillStyle = '#fff';
+    mg.fillText(text, 1, fs);
+    const id = mg.getImageData(0, 0, w, h).data;
+    cvT.width = w;
+    cvT.height = h;
+    const g2 = cvT.getContext('2d'), col = getComputedStyle(cvT.parentElement).color;
+    for (let y = 0; y < h; y++)
+        for (let x = 0; x < w; x++)
+            if (id[(y * w + x) * 4 + 3] > 120) {
+                g2.fillStyle = '#7d2e2a';
+                g2.fillRect(x + 1, y + 1, 1, 1);
+            }
+    for (let y = 0; y < h; y++)
+        for (let x = 0; x < w; x++)
+            if (id[(y * w + x) * 4 + 3] > 120) {
+                g2.fillStyle = col;
+                g2.fillRect(x, y, 1, 1);
+            }
+    const avail = Math.max(120, Math.min(480, window.innerWidth) - 64), sc = Math.max(2, Math.min(4, Math.floor(avail / w)));
+    cvT.style.width = w * sc + 'px';
+    cvT.style.height = h * sc + 'px';
+}
+if (document.fonts && document.fonts.load)
+    document.fonts.load('700 14px "Pixelify Sans"').then(paintTitle, paintTitle);
+else
+    paintTitle();
+window.addEventListener('resize', paintTitle);
 resize();
 Shell.applyI18n();
 showMenu();
