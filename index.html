@@ -1925,7 +1925,13 @@ const HIMNO = (() => {
     ];
     return fr.flat().map(([n, d]) => [N[n], d * 0.34]);
 })();
-const TUNES = [HIMNO];
+const NF = { DO4: 261.6, RE4: 293.7, MI4: 329.6, FA4: 349.2, SOL4: 392, LA4: 440, SIb4: 466.2, SI4: 493.9, DO5: 523.3, RE5: 587.3, MI5: 659.3, FA5: 698.5, SOL5: 784 };
+const tune = (bpm, seq) => seq.map(([n, d]) => [n ? NF[n] : 0, d * 4 * 60 / bpm]);
+const AMPARITO = tune(120, [['RE5', 0.125], ['MI5', 0.125], ['FA5', 0.25], ['FA5', 0.25], [null, 0.25], ['LA4', 0.125], ['SIb4', 0.125], ['DO5', 0.25], ['DO5', 0.25], [null, 0.25],
+    ['FA4', 0.125], ['SOL4', 0.125], ['LA4', 0.375], ['SIb4', 0.125], ['DO5', 0.5]]);
+const PAQUITO = tune(130, [['DO5', 0.125], ['DO5', 0.125], ['DO5', 0.125], ['RE5', 0.125], ['MI5', 0.25], ['DO5', 0.25], ['RE5', 0.125], ['RE5', 0.125], ['RE5', 0.125], ['MI5', 0.125],
+    ['FA5', 0.25], ['RE5', 0.25], [null, 0.125], ['SOL5', 0.25], ['FA5', 0.125], ['MI5', 0.25], ['RE5', 0.25], ['DO5', 0.5]]);
+const TUNES = [AMPARITO, PAQUITO, HIMNO];
 let mus = { ti: 0, i: 0, next: 0, off: false }, notesP = [], noteT = 0, speedT = 0, freezeT = 0;
 const bandAlive = () => OBJ.some(o => (o.tag === 'band' || o.tag === 'bombardino') && o.alive);
 function musicStep(dt) {
@@ -1951,9 +1957,11 @@ function musicStep(dt) {
         if ((o.tag === 'band' || o.tag === 'bombardino') && o.alive)
             dmin = Math.min(dmin, Math.hypot(o.x - hole.x, o.y - hole.y));
     const v = fast ? 1 : clamp(1.15 - dmin / 200, 0.22, 0.7);
-    Shell.tone(f, d * 0.92, 'sawtooth', 0.022 * v, 0);
-    Shell.tone(f, d * 0.92, 'triangle', 0.06 * v, 0);
-    Shell.tone(f / 2, d * 0.9, 'triangle', 0.035 * v, 0);
+    if (f) {
+        Shell.tone(f, d * 0.92, 'sawtooth', 0.022 * v, 0);
+        Shell.tone(f, d * 0.92, 'triangle', 0.06 * v, 0);
+        Shell.tone(f / 2, d * 0.9, 'triangle', 0.035 * v, 0);
+    }
     mus.next = T + d;
     return true;
 }
