@@ -206,7 +206,7 @@ const Shell = (() => {
         return s;
     }
     function applyI18n() {
-        document.documentElement.lang = lang;
+        document.documentElement.lang = lang === 'ca' ? 'ca-ES-valencia' : lang;
         document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
         document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
     }
@@ -282,7 +282,7 @@ const Shell = (() => {
         en: { copied: 'Copied!', sound: 'Sound', language: 'Language', home: 'All games' }
     });
     function wireControls(muteBtn, langBtn, onLang) {
-        const paint = () => { muteBtn.classList.toggle('off', muted); muteBtn.setAttribute('aria-pressed', String(!muted)); langBtn.textContent = lang.toUpperCase(); };
+        const paint = () => { muteBtn.classList.toggle('off', muted); muteBtn.setAttribute('aria-pressed', String(!muted)); langBtn.textContent = lang === 'ca' ? 'VA' : lang.toUpperCase(); };
         muteBtn.addEventListener('click', () => { toggleMute(); ensureAudio(); paint(); });
         langBtn.addEventListener('click', () => { toggleLang(); paint(); if (onLang)
             onLang(); });
@@ -320,11 +320,11 @@ Shell.addStrings({
         hint: 'Arrastra para moverte', timeUp: '¡Tiempo!', pct: 'Te has tragado el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: '¡Más grande!', shout: '¡{n}!',
         lm_church: 'la iglesia', lm_tower: 'el campanario', lm_fountain: 'la fuente', lm_hall: 'el Ayuntamiento', lm_jutera: 'la Jutera', lm_cultura: 'la Casa de la Cultura', lm_metro: 'el metro', lm_bull: 'el toro',
         lm_falla: 'la falla', lm_band: 'la Banda Santa Cecilia de Foios', lm_bombardino: 'un bombardino', speedGot: '🎺 ¡Rapidez {s} s!', bombT1: '¡Un bombardino!', bombT2: '¡Huye rápido!', solfeo: '…o aprende solfeo', pause: 'Pausa', paused: 'Pausa', resume: 'Seguir', lm_patrocinio: 'el colegio Virgen del Patrocinio', lm_jaume: 'el colegio Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomóvil', lm_quintos: 'los quintos', lm_purisimas: 'las purísimas', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'la horchatería', lm_fronton: 'el frontón', lm_goal: 'la portería', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'los recres', lm_forn: 'el Forn Vell' },
-    ca: { intro: 'Sota el domini del teu patrocini volem estar…', introSkip: 'Toca per a començar', clockDrop: 'S’ha caigut el rellotge de l’església!', clockGot: '⏰ +{s} segons!', tagline: 'Engoleix el poble en 60 segons i deixa-ho tot sota el domini del seu patrocini.', best: 'Rècord', streak: 'Ratxa', play: 'Juga', daily: 'Repte diari #{n}', dailyDone: 'Avui: {s}', retry: 'Una altra', share: 'Comparteix', menu: 'Menú',
-        free: 'Lliure', dailyMode: 'Diari #{n}', newBest: 'Nou rècord.', toBest: 'Et van faltar {d} punts per al teu rècord ({b}).', official: 'Intent oficial del dia. Ratxa: {s}.', practice: 'Pràctica: només compta el primer intent del dia.',
-        hint: 'Arrossega per moure’t', timeUp: 'Temps!', pct: 'T’has engolit el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: 'Més gran!', shout: '{n}!',
+    ca: { intro: 'Sota el domini del teu patrocini volem estar…', introSkip: 'Toca per a començar', clockDrop: 'S’ha caigut el rellotge de l’església!', clockGot: '⏰ +{s} segons!', tagline: 'Engolix el poble en 60 segons i deixa-ho tot sota el domini del seu patrocini.', best: 'Rècord', streak: 'Ratxa', play: 'Juga', daily: 'Repte diari #{n}', dailyDone: 'Avui: {s}', retry: 'Una altra', share: 'Compartix', menu: 'Menú',
+        free: 'Lliure', dailyMode: 'Diari #{n}', newBest: 'Nou rècord.', toBest: 'Et faltaren {d} punts per al teu rècord ({b}).', official: 'Intent oficial del dia. Ratxa: {s}.', practice: 'Pràctica: només compta el primer intent del dia.',
+        hint: 'Arrossega per a moure’t', timeUp: 'Temps!', pct: 'T’has engolit el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: 'Més gran!', shout: '{n}!',
         lm_church: 'l’església', lm_tower: 'el campanar', lm_fountain: 'la font', lm_hall: 'l’Ajuntament', lm_jutera: 'la Jutera', lm_cultura: 'la Casa de la Cultura', lm_metro: 'el metro', lm_bull: 'el bou',
-        lm_falla: 'la falla', lm_band: 'la Banda Santa Cecília de Foios', lm_bombardino: 'un bombardí', speedGot: '🎺 Rapidesa {s} s!', bombT1: 'Un bombardí!', bombT2: 'Fuig ràpid!', solfeo: '…o aprèn solfeig', pause: 'Pausa', paused: 'Pausa', resume: 'Continuar', lm_patrocinio: 'el col·legi Verge del Patrocini', lm_jaume: 'el col·legi Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomòbil', lm_quintos: 'els quintos', lm_purisimas: 'les purísimes', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'l’orxateria', lm_fronton: 'el frontó', lm_goal: 'la porteria', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'els recres', lm_forn: 'el Forn Vell' },
+        lm_falla: 'la falla', lm_band: 'la Banda Santa Cecília de Foios', lm_bombardino: 'un bombardí', speedGot: '🎺 Rapidesa {s} s!', bombT1: 'Un bombardí!', bombT2: 'Fuig ràpid!', solfeo: '…o aprén solfeig', pause: 'Pausa', paused: 'Pausa', resume: 'Continuar', lm_patrocinio: 'el col·legi Verge del Patrocini', lm_jaume: 'el col·legi Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomòbil', lm_quintos: 'els quintos', lm_purisimas: 'les purísimes', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'l’orxateria', lm_fronton: 'el frontó', lm_goal: 'la porteria', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'els recres', lm_forn: 'el Forn Vell' },
     en: { intro: 'Under the rule of your patronage we want to be…', introSkip: 'Tap to start', clockDrop: 'The church clock has fallen!', clockGot: '⏰ +{s} seconds!', tagline: 'Swallow the town in 60 seconds and leave everything under the rule of its patronage.', best: 'Best', streak: 'Streak', play: 'Play', daily: 'Daily #{n}', dailyDone: 'Today: {s}', retry: 'Again', share: 'Share', menu: 'Menu',
         free: 'Free', dailyMode: 'Daily #{n}', newBest: 'New best.', toBest: '{d} points short of your best ({b}).', official: 'Official run for today. Streak: {s}.', practice: 'Practice: only the first run of the day counts.',
         hint: 'Drag to move', timeUp: 'Time’s up!', pct: 'You swallowed {p}% of Foios.', pctShort: '{p}% of Foios', bigger: 'Bigger!', shout: '{n}!',
