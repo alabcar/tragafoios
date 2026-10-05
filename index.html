@@ -59,6 +59,12 @@ h1 canvas { position: static; inset: auto; width: auto; height: auto; display: b
 .note { font-size: 16px; line-height: 1.3; }
 .note.hot { color: var(--hot); }
 .marks { font-size: 22px; letter-spacing: 2px; min-height: 1em; }
+#solfeo { position: absolute; left: 50%; top: calc(42% + 64px); transform: translateX(-50%); z-index: 5; padding: 10px 16px; font: 700 clamp(20px, 6vw, 30px) var(--pix); color: #fff3dc; text-decoration: none; white-space: nowrap; text-shadow: 0 3px 0 #2a1b2e, 3px 0 0 #2a1b2e, -3px 0 0 #2a1b2e, 0 -3px 0 #2a1b2e; animation: blink .5s steps(1) infinite; }
+@keyframes blink { 50% { opacity: .15; } }
+@media (prefers-reduced-motion: reduce) { #solfeo { animation: none; } }
+#pauseCard { margin: auto auto; text-align: center; max-width: 320px; }
+#pauseCard .big { font-size: clamp(40px, 12vw, 64px); }
+.overlay.mid { justify-content: center; background: rgba(42, 27, 46, .45); }
 textarea { width: 100%; min-height: 84px; font: 14px var(--pix); background: transparent; color: var(--ink); border: 2px dashed var(--muted); padding: 8px; box-sizing: border-box; }
 </style>
 </head>
@@ -73,6 +79,9 @@ textarea { width: 100%; min-height: 84px; font: 14px var(--pix); background: tra
     </div>
     <div class="time" id="time"></div>
     <div class="tools">
+      <button class="icon" id="pauseBtn" data-i18n-aria="pause" hidden>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
       <button class="icon" id="lang" data-i18n-aria="language">ES</button>
       <button class="icon" id="mute" data-i18n-aria="sound">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path class="wave" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/><path class="cross" d="M16 9l5 6M21 9l-5 6"/></svg>
@@ -81,6 +90,17 @@ textarea { width: 100%; min-height: 84px; font: 14px var(--pix); background: tra
   </div>
 
   <div id="intro" role="presentation"><p id="introText" aria-live="polite"></p><small data-i18n="introSkip"></small></div>
+
+  <a id="solfeo" href="https://alabcar.github.io/solfeo/" target="_blank" rel="noopener" data-i18n="solfeo" hidden></a>
+
+  <div class="overlay mid" id="pause" hidden>
+    <div class="card" id="pauseCard">
+      <div class="big" data-i18n="paused"></div>
+      <div class="row">
+        <button class="btn primary" id="resume" data-i18n="resume"></button>
+      </div>
+    </div>
+  </div>
 
   <div class="overlay" id="menu">
     <div class="card">
@@ -299,17 +319,17 @@ Shell.addStrings({
         free: 'Libre', dailyMode: 'Diario #{n}', newBest: 'Nuevo récord.', toBest: 'Te faltaron {d} puntos para tu récord ({b}).', official: 'Intento oficial del día. Racha: {s}.', practice: 'Práctica: cuenta solo el primer intento del día.',
         hint: 'Arrastra para moverte', timeUp: '¡Tiempo!', pct: 'Te has tragado el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: '¡Más grande!', shout: '¡{n}!',
         lm_church: 'la iglesia', lm_tower: 'el campanario', lm_fountain: 'la fuente', lm_hall: 'el Ayuntamiento', lm_jutera: 'la Jutera', lm_cultura: 'la Casa de la Cultura', lm_metro: 'el metro', lm_bull: 'el toro',
-        lm_falla: 'la falla', lm_band: 'la Banda Santa Cecilia de Foios', lm_bombardino: 'un bombardino', speedGot: '🎺 ¡Rapidez {s} s!', bombT1: '¡Un bombardino!', bombT2: '¡Huye rápido!', lm_patrocinio: 'el colegio Virgen del Patrocinio', lm_jaume: 'el colegio Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomóvil', lm_quintos: 'los quintos', lm_purisimas: 'las purísimas', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'la horchatería', lm_fronton: 'el frontón', lm_goal: 'la portería', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'los recres', lm_forn: 'el Forn Vell' },
+        lm_falla: 'la falla', lm_band: 'la Banda Santa Cecilia de Foios', lm_bombardino: 'un bombardino', speedGot: '🎺 ¡Rapidez {s} s!', bombT1: '¡Un bombardino!', bombT2: '¡Huye rápido!', solfeo: '…o aprende solfeo', pause: 'Pausa', paused: 'Pausa', resume: 'Seguir', lm_patrocinio: 'el colegio Virgen del Patrocinio', lm_jaume: 'el colegio Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomóvil', lm_quintos: 'los quintos', lm_purisimas: 'las purísimas', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'la horchatería', lm_fronton: 'el frontón', lm_goal: 'la portería', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'los recres', lm_forn: 'el Forn Vell' },
     ca: { intro: 'Sota el domini del teu patrocini volem estar…', introSkip: 'Toca per a començar', clockDrop: 'S’ha caigut el rellotge de l’església!', clockGot: '⏰ +{s} segons!', tagline: 'Engoleix el poble en 60 segons i deixa-ho tot sota el domini del seu patrocini.', best: 'Rècord', streak: 'Ratxa', play: 'Juga', daily: 'Repte diari #{n}', dailyDone: 'Avui: {s}', retry: 'Una altra', share: 'Comparteix', menu: 'Menú',
         free: 'Lliure', dailyMode: 'Diari #{n}', newBest: 'Nou rècord.', toBest: 'Et van faltar {d} punts per al teu rècord ({b}).', official: 'Intent oficial del dia. Ratxa: {s}.', practice: 'Pràctica: només compta el primer intent del dia.',
         hint: 'Arrossega per moure’t', timeUp: 'Temps!', pct: 'T’has engolit el {p} % de Foios.', pctShort: '{p} % de Foios', bigger: 'Més gran!', shout: '{n}!',
         lm_church: 'l’església', lm_tower: 'el campanar', lm_fountain: 'la font', lm_hall: 'l’Ajuntament', lm_jutera: 'la Jutera', lm_cultura: 'la Casa de la Cultura', lm_metro: 'el metro', lm_bull: 'el bou',
-        lm_falla: 'la falla', lm_band: 'la Banda Santa Cecília de Foios', lm_bombardino: 'un bombardí', speedGot: '🎺 Rapidesa {s} s!', bombT1: 'Un bombardí!', bombT2: 'Fuig ràpid!', lm_patrocinio: 'el col·legi Verge del Patrocini', lm_jaume: 'el col·legi Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomòbil', lm_quintos: 'els quintos', lm_purisimas: 'les purísimes', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'l’orxateria', lm_fronton: 'el frontó', lm_goal: 'la porteria', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'els recres', lm_forn: 'el Forn Vell' },
+        lm_falla: 'la falla', lm_band: 'la Banda Santa Cecília de Foios', lm_bombardino: 'un bombardí', speedGot: '🎺 Rapidesa {s} s!', bombT1: 'Un bombardí!', bombT2: 'Fuig ràpid!', solfeo: '…o aprèn solfeig', pause: 'Pausa', paused: 'Pausa', resume: 'Continuar', lm_patrocinio: 'el col·legi Verge del Patrocini', lm_jaume: 'el col·legi Rey en Jaume', lm_refran: 'Refrán Torres', lm_discomovil: 'la Discomòbil', lm_quintos: 'els quintos', lm_purisimas: 'les purísimes', lm_paella: 'la paella', lm_caldereta: 'la caldereta', lm_horchata: 'l’orxateria', lm_fronton: 'el frontó', lm_goal: 'la porteria', lm_barraca: 'la barraca', lm_bar: 'el bar', lm_tractor: 'el tractor', lm_recres: 'els recres', lm_forn: 'el Forn Vell' },
     en: { intro: 'Under the rule of your patronage we want to be…', introSkip: 'Tap to start', clockDrop: 'The church clock has fallen!', clockGot: '⏰ +{s} seconds!', tagline: 'Swallow the town in 60 seconds and leave everything under the rule of its patronage.', best: 'Best', streak: 'Streak', play: 'Play', daily: 'Daily #{n}', dailyDone: 'Today: {s}', retry: 'Again', share: 'Share', menu: 'Menu',
         free: 'Free', dailyMode: 'Daily #{n}', newBest: 'New best.', toBest: '{d} points short of your best ({b}).', official: 'Official run for today. Streak: {s}.', practice: 'Practice: only the first run of the day counts.',
         hint: 'Drag to move', timeUp: 'Time’s up!', pct: 'You swallowed {p}% of Foios.', pctShort: '{p}% of Foios', bigger: 'Bigger!', shout: '{n}!',
         lm_church: 'the church', lm_tower: 'the bell tower', lm_fountain: 'the fountain', lm_hall: 'the town hall', lm_jutera: 'the Jutera', lm_cultura: 'the culture house', lm_metro: 'the metro', lm_bull: 'the bull',
-        lm_falla: 'the falla', lm_band: 'the Santa Cecilia Band of Foios', lm_bombardino: 'a euphonium', speedGot: '🎺 Speed boost {s} s!', bombT1: 'A euphonium!', bombT2: 'Run, quick!', lm_patrocinio: 'the Virgen del Patrocinio school', lm_jaume: 'the Rey en Jaume school', lm_refran: 'Refrán Torres', lm_discomovil: 'the Discomóvil', lm_quintos: 'the quintos', lm_purisimas: 'the purísimas', lm_paella: 'the paella', lm_caldereta: 'the caldereta', lm_horchata: 'the horchata bar', lm_fronton: 'the pelota court', lm_goal: 'the goal', lm_barraca: 'the barraca', lm_bar: 'the bar', lm_tractor: 'the tractor', lm_recres: 'the arcade', lm_forn: 'the Forn Vell bakery' }
+        lm_falla: 'the falla', lm_band: 'the Santa Cecilia Band of Foios', lm_bombardino: 'a euphonium', speedGot: '🎺 Speed boost {s} s!', bombT1: 'A euphonium!', bombT2: 'Run, quick!', solfeo: '…or learn solfège', pause: 'Pause', paused: 'Paused', resume: 'Resume', lm_patrocinio: 'the Virgen del Patrocinio school', lm_jaume: 'the Rey en Jaume school', lm_refran: 'Refrán Torres', lm_discomovil: 'the Discomóvil', lm_quintos: 'the quintos', lm_purisimas: 'the purísimas', lm_paella: 'the paella', lm_caldereta: 'the caldereta', lm_horchata: 'the horchata bar', lm_fronton: 'the pelota court', lm_goal: 'the goal', lm_barraca: 'the barraca', lm_bar: 'the bar', lm_tractor: 'the tractor', lm_recres: 'the arcade', lm_forn: 'the Forn Vell bakery' }
 });
 const EMOJI = { church: '⛪', tower: '🔔', fountain: '⛲', hall: '🏛️', jutera: '🏭', cultura: '🎭', metro: '🚇', bull: '🐂', falla: '🔥', band: '🎺', patrocinio: '🏫', jaume: '👑', quintos: '🧢', reloj: '⏰', refran: '🏃', discomovil: '🪩', purisimas: '👗', paella: '🥘', caldereta: '🍲', horchata: '🥛', fronton: '🧱', goal: '⚽', barraca: '🏡', bar: '🍺', tractor: '🚜', recres: '🕹️', forn: '🥖', bombardino: '📯' };
 const Art = (() => {
@@ -1932,7 +1952,7 @@ const AMPARITO = tune(120, [['RE5', 0.125], ['MI5', 0.125], ['FA5', 0.25], ['FA5
 const PAQUITO = tune(130, [['DO5', 0.125], ['DO5', 0.125], ['DO5', 0.125], ['RE5', 0.125], ['MI5', 0.25], ['DO5', 0.25], ['RE5', 0.125], ['RE5', 0.125], ['RE5', 0.125], ['MI5', 0.125],
     ['FA5', 0.25], ['RE5', 0.25], [null, 0.125], ['SOL5', 0.25], ['FA5', 0.125], ['MI5', 0.25], ['RE5', 0.25], ['DO5', 0.5]]);
 const TUNES = [AMPARITO, PAQUITO, HIMNO];
-let mus = { ti: 0, i: 0, next: 0, off: false }, notesP = [], noteT = 0, speedT = 0, freezeT = 0;
+let mus = { ti: 0, i: 0, next: 0, off: false }, notesP = [], noteT = 0, speedT = 0, freezeT = 0, solfeoT = 0, paused = false;
 const bandAlive = () => OBJ.some(o => (o.tag === 'band' || o.tag === 'bombardino') && o.alive);
 function musicStep(dt) {
     if (mus.off || state !== 'play')
@@ -1985,6 +2005,7 @@ function newGame(m) {
     notesP = [];
     speedT = 0;
     freezeT = 0;
+    solfeoT = 0;
     mus = { ti: 0, i: 0, next: 0, off: false };
     eatenTags = [];
     combo = 0;
@@ -2001,6 +2022,9 @@ function start(m) {
     Shell.ensureAudio();
     newGame(m);
     state = 'play';
+    setPaused(false);
+    $('solfeo').hidden = true;
+    $('pauseBtn').hidden = false;
     hintT = 2.8;
     $('menu').hidden = true;
     $('over').hidden = true;
@@ -2053,6 +2077,7 @@ function swallow(o, dx) {
         if (o.tag === 'bombardino') {
             speedT = SPEED_T;
             freezeT = 1.8;
+            solfeoT = 5;
             mus.next = 0;
             mus.bomb = true;
             [0, 0.12, 0.24, 0.42].forEach((d, i) => { Shell.tone([392, 523, 659, 784][i], i === 3 ? 0.5 : 0.14, 'sawtooth', 0.05, 0, d); Shell.tone([196, 262, 330, 392][i], i === 3 ? 0.5 : 0.14, 'triangle', 0.08, 0, d); });
@@ -2121,7 +2146,25 @@ function clockMove(o, dt) {
         floats.push({ x: o.x + 4, y: o.y, text: '…', life: 0.8 });
     }
 }
+function setPaused(v) {
+    v = v && (state === 'play' || state === 'ending');
+    if (paused === v)
+        return;
+    paused = v;
+    keys = {};
+    if (joy)
+        joy.active = false;
+    $('pause').hidden = !v;
+    if (v)
+        $('solfeo').hidden = true;
+    if (!v)
+        last = performance.now();
+}
 function update(dt) {
+    if (solfeoT > 0) {
+        solfeoT = Math.max(0, solfeoT - dt);
+        $('solfeo').hidden = !(solfeoT > 0 && state === 'play');
+    }
     if (freezeT > 0) {
         freezeT = Math.max(0, freezeT - dt);
         return;
@@ -2413,6 +2456,8 @@ function draw() {
 }
 function showOver() {
     state = 'over';
+    $('pauseBtn').hidden = true;
+    $('solfeo').hidden = true;
     const prev = best;
     if (score > best) {
         best = score;
@@ -2434,6 +2479,9 @@ function shareText() {
 }
 function showMenu() {
     state = 'menu';
+    setPaused(false);
+    $('pauseBtn').hidden = true;
+    $('solfeo').hidden = true;
     if (!OBJ.length)
         newGame('free');
     $('mBest').textContent = best;
@@ -2471,6 +2519,12 @@ cv.addEventListener('pointercancel', endJoy);
 window.addEventListener('keydown', e => {
     if (e.target.tagName === 'BUTTON' && (e.code === 'Space' || e.code === 'Enter'))
         return;
+    if ((e.code === 'Escape' || e.code === 'KeyP') && (state === 'play' || state === 'ending')) {
+        setPaused(!paused);
+        return;
+    }
+    if (paused)
+        return;
     keys[e.code] = true;
     if (e.code.startsWith('Arrow'))
         e.preventDefault();
@@ -2479,7 +2533,12 @@ window.addEventListener('keydown', e => {
 });
 window.addEventListener('keyup', e => { keys[e.code] = false; });
 window.addEventListener('blur', () => { keys = {}; if (joy)
-    joy.active = false; });
+    joy.active = false; setPaused(true); });
+document.addEventListener('visibilitychange', () => { if (document.hidden)
+    setPaused(true); });
+$('pauseBtn').addEventListener('click', () => setPaused(!paused));
+$('resume').addEventListener('click', () => setPaused(false));
+$('solfeo').addEventListener('click', () => { solfeoT = 0; $('solfeo').hidden = true; setPaused(true); });
 $('playFree').addEventListener('click', () => start('free'));
 $('retry').addEventListener('click', () => start(mode));
 $('toMenu').addEventListener('click', showMenu);
@@ -2494,8 +2553,10 @@ let last = performance.now();
 function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000);
     last = now;
-    update(dt);
-    draw();
+    if (!paused) {
+        update(dt);
+        draw();
+    }
     requestAnimationFrame(frame);
 }
 groundCanvas = paintGround();
